@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo OSI Interactivo - Versión Nativa</title>
+    <style>
+        /* --- ESTILOS NATIVOS (CSS) --- */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-cyan: #22d3ee;
+            --accent-blue: #3b82f6;
+            --border: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding-bottom: 40px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header Responsive */
+        header {
+            background-color: #1e293b;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        /* Estilos para la Identidad Institucional */
+        .branding-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            align-items: center;
+            text-align: center;
+        }
+        @media (min-width: 1024px) {
+            .branding-group {
+                align-items: flex-start;
+                text-align: left;
+                flex: 1; /* Ocupa espacio para empujar el centro */
+            }
+        }
+
+        .uni-block {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .uni-main {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #f8fafc;
+            letter-spacing: 0.05em;
+        }
+        .uni-sub {
+            font-size: 0.7rem;
+            color: #cbd5e1;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        .uni-subject {
+            font-size: 0.65rem;
+            color: var(--accent-cyan);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #22d3ee, #3b82f6);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-align: center;
+            justify-content: center;
+            flex: 1; /* Ocupa espacio central */
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            flex: 1; /* Ocupa espacio derecho */
+        }
+        @media (min-width: 1024px) {
+            .controls {
+                justify-content: flex-end;
+            }
+        }
+
+        /* Botones */
+        button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn-secondary {
+            background-color: #334155;
+            color: #cbd5e1;
+            border: 1px solid #475569;
+        }
+        .btn-secondary:hover {
+            background-color: #475569;
+            border-color: var(--accent-cyan);
+            color: white;
+        }
+
+        .btn-encap { background-color: #334155; color: #22d3ee; }
+        .btn-encap.active {
+            background-color: #22c55e;
+            color: white;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+        }
+
+        .btn-decap { background-color: #334155; color: #22d3ee; }
+        .btn-decap.active {
+            background-color: #a855f7;
+            color: white;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+        }
+
+        .divider {
+            display: none;
+            width: 1px;
+            height: 24px;
+            background-color: var(--border);
+            margin: 0 0.5rem;
+        }
+        @media (min-width: 768px) { .divider { display: block; } }
+
+        /* Layout Principal */
+        main {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 1024px) {
+            main { 
+                margin: 2rem auto;
+                grid-template-columns: 5fr 7fr; 
+                padding: 0 1.5rem;
+            }
+        }
+
+        /* Columna Izquierda: Torre OSI */
+        .osi-tower {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            position: relative;
+            padding: 1.5rem 0;
+        }
+        
+        .tower-label {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+        }
+        .top-label { top: -5px; }
+        .bottom-label { bottom: -5px; }
+
+        .layer-card {
+            background-color: rgba(30, 41, 59, 0.5);
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .layer-card:hover {
+            background-color: #334155;
+            transform: translateX(4px);
+        }
+
+        .layer-card.active {
+            border-color: white;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            background: linear-gradient(to right, #3b82f6, #22d3ee);
+        }
+        
+        .layer-card.simulating {
+            border-color: #facc15;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
+            background-color: #1e293b;
+        }
+
+        .layer-id {
+            min-width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--bg-dark);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .layer-card.active .layer-id {
+            background-color: white;
+            color: black;
+        }
+
+        .layer-info {
+            flex: 1;
+            padding: 0 0.75rem;
+            overflow: hidden;
+        }
+        .layer-name {
+            font-weight: bold;
+            font-size: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .layer-pdu {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+        .layer-card.active .layer-pdu { color: rgba(255,255,255,0.9); }
+
+        /* Estilo para el ícono SVG de la capa en la lista */
+        .layer-icon {
+            color: #64748b;
+            width: 24px;
+            height: 24px;
+            transition: color 0.3s;
+        }
+        .layer-card.active .layer-icon {
+            color: white;
+        }
+        .layer-card:hover .layer-icon {
+            color: #22d3ee;
+        }
+        .layer-card.active:hover .layer-icon {
+            color: white;
+        }
+
+        .processing-badge {
+            position: absolute;
+            right: -10px;
+            background-color: #facc15;
+            color: black;
+            font-size: 0.65rem;
+            font-weight: bold;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            animation: bounce 1s infinite;
+            display: none;
+            z-index: 10;
+        }
+
+        /* Panel Derecho: Detalles */
+        .details-panel {
+            min-height: 400px;
+        }
+
+        .placeholder-state {
+            height: 100%;
+            min-height: 300px;
+            border: 2px dashed var(--border);
+            border-radius: 1rem;
+            background-color: rgba(30, 41, 59, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+
+        .detail-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.4s ease-out;
+            display: none;
+        }
+
+        .detail-header {
+            min-height: 140px;
+            background: linear-gradient(to right, #3b82f6, #22d3ee);
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .detail-icon-bg {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            opacity: 0.2;
+            transform: rotate(12deg) scale(1.5);
+            color: white;
+            pointer-events: none;
+        }
+        
+        .detail-title-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .detail-title h2 { margin: 0; font-size: 1.5rem; color: white; line-height: 1.2; }
+        .detail-title p { margin: 0; color: rgba(255,255,255,0.9); font-size: 0.9rem; }
+        @media (min-width: 768px) { .detail-title h2 { font-size: 2rem; } }
+
+        .detail-body { padding: 1.5rem; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 768px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+
+        .info-box {
+            background-color: rgba(15, 23, 42, 0.5);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        .info-title {
+            color: var(--accent-cyan);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .info-text { font-size: 0.9rem; color: #cbd5e1; line-height: 1.6; }
+
+        .img-container {
+            height: 200px;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border);
+            background: #000;
+        }
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .img-credit {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-top-left-radius: 4px;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        @media (min-width: 768px) { .tech-grid { grid-template-columns: 1fr 1fr 1fr; gap: 1rem; } }
+
+        .tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background-color: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Footer */
+        footer {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding: 2rem 1.5rem;
+            border-top: 1px solid var(--border);
+            background-color: var(--bg-dark);
+        }
+        
+        .footer-cols {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 768px) { .footer-cols { grid-template-columns: 3fr 1fr; } }
+        
+        .layer-groups {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 480px) { .layer-groups { grid-template-columns: repeat(3, 1fr); gap: 1rem; } }
+
+        .layer-group h4 { margin: 0 0 0.5rem 0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .layer-group ul { list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Modales */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0,0,0,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            padding: 1rem;
+        }
+        .modal-overlay.open { opacity: 1; visibility: visible; }
+
+        .modal {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @media (min-width: 768px) { .modal { padding: 2rem; } }
+        .modal-overlay.open .modal { transform: translateY(0); }
+
+        .modal-close {
+            position: absolute;
+            top: 0.75rem; right: 0.75rem;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 0;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.25rem;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        /* Utilidades SVG */
+        .icon { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <!-- Bloque Izquierdo: Branding Universidad -->
+            <div class="branding-group">
+                <div class="uni-block">
+                    <div class="uni-main">UNIVERSIDAD TENAM</div>
+                    <div class="uni-sub">MAESTRÍA EN INGENIERÍA INTELIGENTE</div>
+                    <div class="uni-subject">MATERIA TECNOLOGÍA DE REDES</div>
+                </div>
+            </div>
+
+            <!-- Bloque Central: Título -->
+            <div class="logo">
+                <svg class="icon" style="width: 32px; height: 32px;" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Modelo OSI Interactivo
+            </div>
+
+            <!-- Bloque Derecho: Controles -->
+            <div class="controls">
+                <button class="btn-secondary" onclick="openModal('modal-credits')">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Créditos
+                </button>
+                <button class="btn-secondary" onclick="openModal('modal-refs')">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    Referencias
+                </button>
+                <div class="divider"></div>
+                <button id="btn-encap" class="btn-encap" onclick="startSimulation('encap')">
+                    <svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                    Encapsulamiento
+                </button>
+                <button id="btn-decap" class="btn-decap" onclick="startSimulation('decap')">
+                    <svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                    Desencapsulamiento
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Columna Izquierda: Torre OSI -->
+        <div class="osi-tower" id="osi-tower">
+            <div class="tower-label top-label">Software / Host</div>
+            <!-- Las capas se generan con JS aquí -->
+            <div class="tower-label bottom-label">Hardware / Medios</div>
+        </div>
+
+        <!-- Columna Derecha: Detalles -->
+        <div class="details-panel" id="details-panel">
+            <div class="placeholder-state" id="placeholder">
+                <div style="margin-bottom: 1.5rem; color: #22d3ee;">
+                   <svg style="width: 64px; height: 64px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                </div>
+                <h2>Explora el Modelo OSI</h2>
+                <p>Selecciona una capa de la izquierda para ver detalles.</p>
+                <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; font-size: 0.8rem;">
+                     <span style="display: flex; align-items: center; gap: 0.25rem;"><svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg> Encapsulamiento</span>
+                     <span style="display: flex; align-items: center; gap: 0.25rem;"><svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg> Desencapsulamiento</span>
+                </div>
+            </div>
+
+            <div class="detail-card" id="detail-card">
+                <div class="detail-header" id="detail-header">
+                    <div class="detail-icon-bg" id="detail-icon-bg"></div>
+                    <div class="detail-title-container">
+                        <div class="detail-title">
+                            <h2 id="d-name">Capa X</h2>
+                            <p id="d-pdu">PDU: Datos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-body">
+                    <div class="grid-2">
+                        <div>
+                            <div class="info-box">
+                                <div class="info-title">
+                                    <svg class="icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                    Función Principal
+                                </div>
+                                <div class="info-text" id="d-desc">...</div>
+                            </div>
+                            <div class="info-box">
+                                <div class="info-title" style="color: #4ade80;">
+                                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+                                    Ejemplo Cotidiano
+                                </div>
+                                <div class="info-text" style="font-style: italic;" id="d-example">...</div>
+                            </div>
+                        </div>
+                        <!-- Imagen con enlace seguro para visualización -->
+                        <div class="img-container">
+                            <img id="d-img" src="" alt="Representación Visual" />
+                            <div class="img-credit">Fuente: Unsplash</div>
+                        </div>
+                    </div>
+                    <div class="tech-grid">
+                        <div>
+                            <h5 style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;">Protocolos</h5>
+                            <div id="d-protocols"></div>
+                        </div>
+                        <div>
+                            <h5 style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;">Hardware Típico</h5>
+                            <div style="display: flex; gap: 0.5rem; align-items: flex-start; color: #cbd5e1; font-size: 0.9rem;">
+                                <svg class="icon" style="color: #94a3b8; min-width: 16px; margin-top: 3px;" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                                <span id="d-hardware"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 style="color: #3b82f6; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;">Contexto Cisco</h5>
+                             <div style="display: flex; gap: 0.5rem; align-items: flex-start; color: #cbd5e1; font-size: 0.9rem;">
+                                <svg class="icon" style="color: #3b82f6; min-width: 16px; margin-top: 3px;" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                                <span id="d-cisco"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-cols">
+            <div class="layer-groups">
+                <div class="layer-group">
+                    <h4 style="color: #22d3ee;">Capas de Host</h4>
+                    <ul>
+                        <li>Aplicación</li>
+                        <li>Presentación</li>
+                        <li>Sesión</li>
+                    </ul>
+                </div>
+                <div class="layer-group">
+                    <h4 style="color: #facc15;">Capa Intermedia</h4>
+                    <ul><li>Transporte</li></ul>
+                </div>
+                <div class="layer-group">
+                    <h4 style="color: #4ade80;">Capas de Medios</h4>
+                    <ul>
+                        <li>Red</li>
+                        <li>Enlace de Datos</li>
+                        <li>Física</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: left; padding-top: 1rem; border-top: 1px solid var(--border); margin-top: 1rem;">
+                <p style="font-size: 0.7rem; font-weight: bold; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em;">
+                    Basado en la currícula oficial Cisco Networking Academy (NetAcad)
+                </p>
+            </div>
+            <style>
+                @media (min-width: 768px) {
+                    .footer-cols > div:last-child {
+                        text-align: right; border-top: none; margin-top: 0; border-left: 1px solid var(--border); padding-left: 1.5rem; padding-top: 0;
+                    }
+                }
+            </style>
+        </div>
+    </footer>
+
+    <!-- Modales -->
+    <div class="modal-overlay" id="modal-credits">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('modal-credits')">&times;</button>
+            <h2 class="modal-title">
+                <svg class="icon" style="color: #22d3ee;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                Créditos
+            </h2>
+            <div style="color: #cbd5e1;">
+                <h3 style="color: #22d3ee; font-size: 0.9rem; text-transform: uppercase; margin-top: 1.5rem;">Estudiantes</h3>
+                <ul style="background: rgba(30,41,59,0.5); padding: 1rem 1.5rem; border-radius: 0.5rem; list-style: none;">
+                    <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <div style="width: 32px; height: 32px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: #94a3b8;">BP</div>
+                        <span style="font-weight: 500; color: #e2e8f0;">Berlanga Pablo María Teresa</span>
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <div style="width: 32px; height: 32px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: #94a3b8;">GR</div>
+                        <span style="font-weight: 500; color: #e2e8f0;">García Ramos Cruz Enrique</span>
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="width: 32px; height: 32px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: #94a3b8;">MH</div>
+                        <span style="font-weight: 500; color: #e2e8f0;">Méndez Hernández Teresa de Jesús</span>
+                    </li>
+                </ul>
+                <h3 style="color: #a855f7; font-size: 0.9rem; text-transform: uppercase; margin-top: 1.5rem;">Docente</h3>
+                <div style="background: linear-gradient(to right, #1e293b, #0f172a); padding: 1rem; border-left: 4px solid #a855f7; border-radius: 0.5rem; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <div style="background: rgba(168, 85, 247, 0.1); padding: 0.5rem; border-radius: 50%;">
+                        <svg class="icon" style="color: #a855f7; width: 24px; height: 24px;" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                    </div>
+                    <span style="font-weight: bold; font-size: 1.1rem; color: white;">Dr. Isaías Avendaño Cortes</span>
+                </div>
+            </div>
+            <div style="margin-top: 2rem; text-align: center;">
+                <button class="btn-secondary" style="margin: 0 auto;" onclick="closeModal('modal-credits')">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-refs">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('modal-refs')">&times;</button>
+            <h2 class="modal-title">
+                <svg class="icon" style="color: #22d3ee;" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                Referencias APA 7
+            </h2>
+            <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+                <p style="margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid #22d3ee;">
+                    Cisco Networking Academy. (s.f.). <em>CCNA: Introduction to Networks</em>. Cisco.
+                </p>
+                <p style="margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid #3b82f6;">
+                    International Organization for Standardization. (1994). <em>Information technology — Open Systems Interconnection</em> (ISO/IEC 7498-1:1994).
+                </p>
+                <p style="margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid #a855f7;">
+                    Tanenbaum, A. S., & Feamster, N. (2021). <em>Computer Networks</em> (6th ed.). Pearson.
+                </p>
+                
+                <h3 style="color: #facc15; font-size: 0.9rem; text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 0.5rem;">Créditos de Imágenes</h3>
+                <p style="font-size: 0.8rem; color: #94a3b8;">
+                    Todas las imágenes utilizadas en las tarjetas de detalle son propiedad de sus respectivos autores en <strong>Unsplash.com</strong> y se utilizan con fines ilustrativos.
+                </p>
+            </div>
+            <div style="margin-top: 2rem; text-align: center;">
+                <button class="btn-secondary" style="margin: 0 auto;" onclick="closeModal('modal-refs')">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- LÓGICA JAVASCRIPT NATIVA ---
+        
+        // Datos e Iconos (Matching React Version)
+        const layers = [
+            {
+                id: 7, name: "Aplicación", pdu: "Datos",
+                desc: "La capa que interactúa directamente con el usuario. Proporciona servicios de red a las aplicaciones.",
+                protocols: ["HTTP/HTTPS", "DNS", "SMTP", "FTP", "SSH"],
+                hardware: "PC, Servidores, Teléfonos, Firewalls (L7)",
+                example: "Cuando usas Chrome para ver Facebook o envías un correo por Outlook.",
+                cisco: "Cisco Web Security, Firewalls de Nueva Generación.",
+                color: "linear-gradient(to right, #8b5cf6, #4f46e5)",
+                img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=600",
+                iconPath: '<circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>'
+            },
+            {
+                id: 6, name: "Presentación", pdu: "Datos",
+                desc: "Se encarga de la traducción, cifrado y compresión de los datos. Asegura que la información sea legible.",
+                protocols: ["SSL/TLS", "JPEG", "MPEG", "ASCII", "GIF"],
+                hardware: "Gateways, Firewalls",
+                example: "Convertir un archivo a formato .jpg o cifrar tus datos bancarios (HTTPS).",
+                cisco: "Cifrado VPN, Cisco Secure Client.",
+                color: "linear-gradient(to right, #6366f1, #2563eb)",
+                img: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=600",
+                iconPath: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>'
+            },
+            {
+                id: 5, name: "Sesión", pdu: "Datos",
+                desc: "Establece, gestiona y finaliza las conexiones (sesiones) entre aplicaciones locales y remotas.",
+                protocols: ["NetBIOS", "RPC", "SQL", "NFS"],
+                hardware: "Gateways, Servidores",
+                example: "Mantener tu sesión de inicio activa en un sitio web bancario durante unos minutos.",
+                cisco: "Control de sesiones en Firewalls Cisco ASA.",
+                color: "linear-gradient(to right, #3b82f6, #06b6d4)",
+                img: "https://images.unsplash.com/photo-1633265486064-086b219458ec?auto=format&fit=crop&q=80&w=600",
+                iconPath: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>'
+            },
+            {
+                id: 4, name: "Transporte", pdu: "Segmentos",
+                desc: "Garantiza la transferencia fiable de datos. Controla el flujo y corrige errores.",
+                protocols: ["TCP", "UDP", "SCTP"],
+                hardware: "Firewalls, Load Balancers",
+                example: "TCP garantiza que llegue todo el email. UDP se usa para streaming de video rápido.",
+                cisco: "Listas de Control de Acceso (ACL) extendidas.",
+                color: "linear-gradient(to right, #06b6d4, #14b8a6)",
+                img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600",
+                iconPath: '<rect x="1" y="3" width="15" height="13" rx="2" ry="2"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle>'
+            },
+            {
+                id: 3, name: "Red", pdu: "Paquetes",
+                desc: "Determina la mejor ruta para enviar los datos (enrutamiento) y direccionamiento lógico (IP).",
+                protocols: ["IPv4", "IPv6", "ICMP", "IPSec", "OSPF", "EIGRP"],
+                hardware: "Routers, Switches L3",
+                example: "Un Router Cisco enviando tu búsqueda de Google desde tu casa hasta el servidor de Google.",
+                cisco: "Routers Cisco ISR, Protocolos de enrutamiento (OSPF, BGP).",
+                color: "linear-gradient(to right, #14b8a6, #10b981)",
+                img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600",
+                iconPath: '<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line>'
+            },
+            {
+                id: 2, name: "Enlace de Datos", pdu: "Tramas (Frames)",
+                desc: "Transferencia física de datos. Direccionamiento físico (MAC) y detección de errores.",
+                protocols: ["Ethernet", "VLAN", "STP", "PPP", "ARP"],
+                hardware: "Switches, Puentes (Bridges), NIC",
+                example: "Un Switch Cisco Catalyst conectando varias computadoras en una oficina.",
+                cisco: "Switches Cisco Catalyst, VLANs, Direcciones MAC.",
+                color: "linear-gradient(to right, #10b981, #22c55e)",
+                img: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=600",
+                iconPath: '<circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>'
+            },
+            {
+                id: 1, name: "Física", pdu: "Bits",
+                desc: "Transmisión binaria pura (1s y 0s) a través del medio físico (cables, aire).",
+                protocols: ["DSL", "USB", "Ethernet Física", "Bluetooth", "Wi-Fi (Radio)"],
+                hardware: "Cables (UTP/Fibra), Hubs, Repetidores, Antenas",
+                example: "El cable de red azul (RJ45) conectado a tu PC o la señal Wi-Fi invisible.",
+                cisco: "Transceptores de Fibra Óptica, Cables UTP, Access Points.",
+                color: "linear-gradient(to right, #22c55e, #84cc16)",
+                img: "https://images.unsplash.com/photo-1592659762303-90081d34b277?auto=format&fit=crop&q=80&w=600",
+                iconPath: '<path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line>'
+            }
+        ];
+
+        let isSimulating = false;
+
+        // Generar Torre
+        function renderTower() {
+            const container = document.getElementById('osi-tower');
+            const labels = container.querySelectorAll('.tower-label');
+            container.innerHTML = '';
+            container.appendChild(labels[0]);
+
+            layers.forEach(layer => {
+                const el = document.createElement('div');
+                el.className = 'layer-card';
+                el.id = `layer-${layer.id}`;
+                el.onclick = () => selectLayer(layer.id);
+                
+                el.innerHTML = `
+                    <div class="layer-id">${layer.id}</div>
+                    <div class="layer-info">
+                        <div class="layer-name">${layer.name}</div>
+                        <div class="layer-pdu">${layer.pdu}</div>
+                    </div>
+                    <svg class="icon layer-icon" viewBox="0 0 24 24">${layer.iconPath}</svg>
+                    <div class="processing-badge">PROCESANDO</div>
+                `;
+                container.appendChild(el);
+            });
+
+            container.appendChild(labels[1]);
+        }
+
+        // Seleccionar Capa
+        function selectLayer(id) {
+            if (isSimulating) return;
+
+            document.querySelectorAll('.layer-card').forEach(el => {
+                el.classList.remove('active');
+                el.style.background = '';
+            });
+
+            const activeCard = document.getElementById(`layer-${id}`);
+            const layerData = layers.find(l => l.id === id);
+
+            if (activeCard && layerData) {
+                activeCard.classList.add('active');
+                activeCard.style.background = layerData.color;
+                showDetails(layerData);
+                
+                // Scroll hacia detalles en móvil
+                if (window.innerWidth < 1024) {
+                    document.getElementById('details-panel').scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        // Mostrar Detalles
+        function showDetails(data) {
+            document.getElementById('placeholder').style.display = 'none';
+            const card = document.getElementById('detail-card');
+            card.style.display = 'block';
+
+            document.getElementById('detail-header').style.background = data.color;
+            document.getElementById('detail-icon-bg').innerHTML = `<svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${data.iconPath}</svg>`;
+            document.getElementById('d-name').innerText = `Capa ${data.id}: ${data.name}`;
+            document.getElementById('d-pdu').innerText = `PDU: ${data.pdu}`;
+            document.getElementById('d-desc').innerText = data.desc;
+            document.getElementById('d-example').innerText = `"${data.example}"`;
+            document.getElementById('d-img').src = data.img;
+            document.getElementById('d-hardware').innerText = data.hardware;
+            document.getElementById('d-cisco').innerText = data.cisco;
+
+            const pContainer = document.getElementById('d-protocols');
+            pContainer.innerHTML = '';
+            data.protocols.forEach(p => {
+                const tag = document.createElement('span');
+                tag.className = 'tag';
+                tag.innerText = p;
+                pContainer.appendChild(tag);
+            });
+        }
+
+        // Simulación
+        function startSimulation(mode) {
+            if (isSimulating) return;
+            isSimulating = true;
+            
+            document.getElementById('placeholder').style.display = 'flex';
+            document.getElementById('detail-card').style.display = 'none';
+            document.querySelectorAll('.layer-card').forEach(el => {
+                el.classList.remove('active');
+                el.style.background = '';
+            });
+
+            const btn = document.getElementById(mode === 'encap' ? 'btn-encap' : 'btn-decap');
+            btn.classList.add('active');
+
+            let currentId = mode === 'encap' ? 7 : 1;
+            const endId = mode === 'encap' ? 0 : 8;
+            const increment = mode === 'encap' ? -1 : 1;
+
+            const interval = setInterval(() => {
+                document.querySelectorAll('.layer-card').forEach(el => {
+                    el.classList.remove('simulating');
+                    el.querySelector('.processing-badge').style.display = 'none';
+                });
+
+                if (currentId === endId) {
+                    clearInterval(interval);
+                    isSimulating = false;
+                    btn.classList.remove('active');
+                    return;
+                }
+
+                const card = document.getElementById(`layer-${currentId}`);
+                if (card) {
+                    card.classList.add('simulating');
+                    card.querySelector('.processing-badge').style.display = 'block';
+                }
+
+                currentId += increment;
+
+            }, 800);
+        }
+
+        // Modales
+        function openModal(id) {
+            document.getElementById(id).classList.add('open');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('open');
+        }
+
+        renderTower();
+    </script>
+</body>
+</html>
