@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modelo OSI Interactivo - Universidad Tenam</title>
     <style>
-        /* --- ESTILOS NATIVOS (CSS) --- */
+        /* --- ESTILOS NATIVOS (CSS) - TEMA CLARO --- */
         :root {
-            --bg-dark: #0f172a;       /* Slate 900 */
-            --bg-card: #1e293b;       /* Slate 800 */
-            --text-main: #f8fafc;     /* Slate 50 */
-            --text-muted: #94a3b8;    /* Slate 400 */
-            --accent-cyan: #22d3ee;
-            --accent-blue: #3b82f6;
-            --border: #334155;
+            --bg-dark: #f0f4f8;       /* Fondo Principal Claro */
+            --bg-card: #ffffff;       /* Fondo de Tarjetas Blanco */
+            --text-main: #1e293b;     /* Texto Principal Oscuro */
+            --text-muted: #64748b;    /* Texto Secundario Gris */
+            --accent-cyan: #0ea5e9;   /* Azul Cyan Vibrante */
+            --accent-blue: #3b82f6;   /* Azul Primario */
+            --border: #cbd5e1;        /* Bordes Suaves */
             
-            /* Paleta del Header basada en la imagen */
+            /* Paleta del Header (Mantiene identidad institucional oscura) */
             --header-bg-start: #4338ca; /* Indigo 700 */
             --header-bg-end: #312e81;   /* Indigo 900 */
             --btn-green: #10b981;       /* Emerald 500 */
@@ -35,7 +35,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- HEADER REDISEÑADO --- */
+        /* --- HEADER --- */
         header {
             background: linear-gradient(90deg, var(--header-bg-start) 0%, var(--header-bg-end) 100%);
             border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -43,7 +43,7 @@
             position: sticky;
             top: 0;
             z-index: 50;
-            box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .header-content {
@@ -168,15 +168,20 @@
         }
 
         .btn-encap {
-            background-color: rgba(30, 41, 59, 0.5); /* Dark */
-            color: #94a3b8;
-            border: 1px solid #475569;
+            background-color: #ffffff; /* White buttons on light bg */
+            color: #64748b;
+            border: 1px solid transparent;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .btn-encap:hover {
+            background-color: #f1f5f9;
+            color: var(--accent-blue);
         }
         .btn-encap.active {
             background-color: #3b82f6; /* Blue */
             color: white;
             border-color: #3b82f6;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
         }
 
         /* Layout Principal */
@@ -212,47 +217,50 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             white-space: nowrap;
+            font-weight: 600;
         }
-        .top-label { top: -5px; }
-        .bottom-label { bottom: -5px; }
+        .top-label { top: -8px; }
+        .bottom-label { bottom: -8px; }
 
         .layer-card {
-            background-color: rgba(30, 41, 59, 0.5);
-            border: 2px solid var(--border);
+            background-color: var(--bg-card);
+            border: 2px solid transparent;
             border-radius: 0.75rem;
             padding: 0.75rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombra sutil */
         }
 
         .layer-card:hover {
-            background-color: #334155;
+            background-color: #f8fafc;
+            border-color: var(--border);
             transform: translateX(4px);
         }
 
         .layer-card.active {
-            border-color: white;
+            border-color: var(--accent-blue);
             transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+            box-shadow: 0 8px 20px -4px rgba(59, 130, 246, 0.25);
             background: linear-gradient(to right, #3b82f6, #22d3ee);
         }
         
         .layer-card.simulating {
             border-color: #facc15;
             transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
-            background-color: #1e293b;
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.4);
+            background-color: #fefce8;
         }
 
         .layer-id {
             min-width: 36px;
             height: 36px;
             border-radius: 50%;
-            background-color: var(--bg-dark);
+            background-color: #f1f5f9;
             color: var(--text-muted);
             display: flex;
             align-items: center;
@@ -262,7 +270,7 @@
         }
         .layer-card.active .layer-id {
             background-color: white;
-            color: black;
+            color: var(--accent-blue);
         }
 
         .layer-info {
@@ -276,7 +284,10 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            color: var(--text-main);
         }
+        .layer-card.active .layer-name { color: white; }
+
         .layer-pdu {
             font-size: 0.7rem;
             text-transform: uppercase;
@@ -287,13 +298,13 @@
 
         /* Icono SVG de capa */
         .layer-icon {
-            color: #64748b;
+            color: #94a3b8;
             width: 24px;
             height: 24px;
             transition: color 0.3s;
         }
         .layer-card.active .layer-icon { color: white; }
-        .layer-card:hover .layer-icon { color: #22d3ee; }
+        .layer-card:hover .layer-icon { color: var(--accent-cyan); }
         .layer-card.active:hover .layer-icon { color: white; }
 
         .processing-badge {
@@ -305,7 +316,7 @@
             font-weight: bold;
             padding: 0.2rem 0.5rem;
             border-radius: 0.25rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             animation: bounce 1s infinite;
             display: none;
             z-index: 10;
@@ -321,7 +332,7 @@
             min-height: 300px;
             border: 2px dashed var(--border);
             border-radius: 1rem;
-            background-color: rgba(30, 41, 59, 0.3);
+            background-color: rgba(255, 255, 255, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -336,7 +347,7 @@
             border: 1px solid var(--border);
             border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
             animation: fadeIn 0.4s ease-out;
             display: none;
         }
@@ -355,7 +366,7 @@
             position: absolute;
             top: -10px;
             right: 10px;
-            opacity: 0.2;
+            opacity: 0.15;
             transform: rotate(12deg) scale(1.5);
             color: white;
             pointer-events: none;
@@ -377,7 +388,7 @@
         @media (min-width: 768px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
 
         .info-box {
-            background-color: rgba(15, 23, 42, 0.5);
+            background-color: #f8fafc;
             padding: 1rem;
             border-radius: 0.5rem;
             border: 1px solid var(--border);
@@ -392,7 +403,7 @@
             gap: 0.5rem;
             font-size: 0.9rem;
         }
-        .info-text { font-size: 0.9rem; color: #cbd5e1; line-height: 1.6; }
+        .info-text { font-size: 0.9rem; color: var(--text-main); line-height: 1.6; }
 
         .img-container {
             height: 200px;
@@ -400,7 +411,7 @@
             overflow: hidden;
             position: relative;
             border: 1px solid var(--border);
-            background: #000;
+            background: #f1f5f9;
         }
         .img-container img {
             width: 100%;
@@ -413,11 +424,12 @@
             position: absolute;
             bottom: 0;
             right: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #64748b;
             font-size: 0.65rem;
             padding: 2px 6px;
             border-top-left-radius: 4px;
+            font-weight: 500;
         }
 
         .tech-grid {
@@ -433,13 +445,14 @@
         .tag {
             display: inline-block;
             padding: 0.2rem 0.5rem;
-            background-color: rgba(99, 102, 241, 0.2);
-            color: #a5b4fc;
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            background-color: #e0f2fe; /* Light Blue BG */
+            color: #0369a1;           /* Dark Blue Text */
+            border: 1px solid #bae6fd;
             border-radius: 0.25rem;
             font-size: 0.75rem;
             margin-right: 0.25rem;
             margin-bottom: 0.25rem;
+            font-weight: 500;
         }
 
         /* Footer */
@@ -465,14 +478,14 @@
         }
         @media (min-width: 480px) { .layer-groups { grid-template-columns: repeat(3, 1fr); gap: 1rem; } }
 
-        .layer-group h4 { margin: 0 0 0.5rem 0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .layer-group h4 { margin: 0 0 0.5rem 0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; }
         .layer-group ul { list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: var(--text-muted); }
 
         /* Modales */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0,0,0,0.85);
+            background-color: rgba(255,255,255,0.6); /* Overlay claro */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -486,7 +499,7 @@
         .modal-overlay.open { opacity: 1; visibility: visible; }
 
         .modal {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 1rem;
             padding: 1.5rem;
@@ -497,6 +510,7 @@
             transition: transform 0.3s;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
         @media (min-width: 768px) { .modal { padding: 2rem; } }
         .modal-overlay.open .modal { transform: translateY(0); }
@@ -504,7 +518,7 @@
         .modal-close {
             position: absolute;
             top: 0.75rem; right: 0.75rem;
-            background: rgba(255,255,255,0.1);
+            background: #f1f5f9;
             border: none;
             color: var(--text-muted);
             cursor: pointer;
@@ -515,7 +529,9 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
+            transition: background 0.2s;
         }
+        .modal-close:hover { background: #e2e8f0; color: var(--text-main); }
         
         .modal-title {
             display: flex;
@@ -525,6 +541,7 @@
             padding-bottom: 1rem;
             border-bottom: 1px solid var(--border);
             font-size: 1.25rem;
+            color: var(--text-main);
         }
 
         /* Animaciones */
@@ -609,10 +626,10 @@
         <!-- Columna Derecha: Detalles -->
         <div class="details-panel" id="details-panel">
             <div class="placeholder-state" id="placeholder">
-                <div style="margin-bottom: 1.5rem; color: #22d3ee;">
+                <div style="margin-bottom: 1.5rem; color: var(--accent-blue);">
                    <svg style="width: 64px; height: 64px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                 </div>
-                <h2>Explora el Modelo OSI</h2>
+                <h2 style="color: var(--text-main);">Explora el Modelo OSI</h2>
                 <p>Selecciona una capa de la izquierda para ver detalles.</p>
                 <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; font-size: 0.8rem;">
                      <span style="display: flex; align-items: center; gap: 0.25rem;"><svg class="icon" style="width: 14px; height: 14px;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg> Encapsulamiento</span>
@@ -641,7 +658,7 @@
                                 <div class="info-text" id="d-desc">...</div>
                             </div>
                             <div class="info-box">
-                                <div class="info-title" style="color: #4ade80;">
+                                <div class="info-title" style="color: var(--btn-green);">
                                     <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
                                     Ejemplo Cotidiano
                                 </div>
@@ -656,20 +673,20 @@
                     </div>
                     <div class="tech-grid">
                         <div>
-                            <h5 style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;">Protocolos</h5>
+                            <h5 style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 700;">Protocolos</h5>
                             <div id="d-protocols"></div>
                         </div>
                         <div>
-                            <h5 style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;">Hardware Típico</h5>
-                            <div style="display: flex; gap: 0.5rem; align-items: flex-start; color: #cbd5e1; font-size: 0.9rem;">
-                                <svg class="icon" style="color: #94a3b8; min-width: 16px; margin-top: 3px;" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                            <h5 style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 700;">Hardware Típico</h5>
+                            <div style="display: flex; gap: 0.5rem; align-items: flex-start; color: var(--text-main); font-size: 0.9rem;">
+                                <svg class="icon" style="color: var(--text-muted); min-width: 16px; margin-top: 3px;" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
                                 <span id="d-hardware"></span>
                             </div>
                         </div>
                         <div>
-                            <h5 style="color: #3b82f6; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem;">Contexto Cisco</h5>
-                             <div style="display: flex; gap: 0.5rem; align-items: flex-start; color: #cbd5e1; font-size: 0.9rem;">
-                                <svg class="icon" style="color: #3b82f6; min-width: 16px; margin-top: 3px;" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                            <h5 style="color: var(--accent-blue); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 700;">Contexto Cisco</h5>
+                             <div style="display: flex; gap: 0.5rem; align-items: flex-start; color: var(--text-main); font-size: 0.9rem;">
+                                <svg class="icon" style="color: var(--accent-blue); min-width: 16px; margin-top: 3px;" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
                                 <span id="d-cisco"></span>
                             </div>
                         </div>
@@ -683,7 +700,7 @@
         <div class="footer-cols">
             <div class="layer-groups">
                 <div class="layer-group">
-                    <h4 style="color: #22d3ee;">Capas de Host</h4>
+                    <h4 style="color: var(--accent-cyan);">Capas de Host</h4>
                     <ul>
                         <li>Aplicación</li>
                         <li>Presentación</li>
@@ -691,11 +708,11 @@
                     </ul>
                 </div>
                 <div class="layer-group">
-                    <h4 style="color: #facc15;">Capa Intermedia</h4>
+                    <h4 style="color: #eab308;">Capa Intermedia</h4>
                     <ul><li>Transporte</li></ul>
                 </div>
                 <div class="layer-group">
-                    <h4 style="color: #4ade80;">Capas de Medios</h4>
+                    <h4 style="color: var(--btn-green);">Capas de Medios</h4>
                     <ul>
                         <li>Red</li>
                         <li>Enlace de Datos</li>
@@ -723,35 +740,35 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal('modal-credits')">&times;</button>
             <h2 class="modal-title">
-                <svg class="icon" style="color: #22d3ee;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <svg class="icon" style="color: var(--accent-cyan);" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 Créditos
             </h2>
-            <div style="color: #cbd5e1;">
-                <h3 style="color: #22d3ee; font-size: 0.9rem; text-transform: uppercase; margin-top: 1.5rem;">Estudiantes</h3>
-                <ul style="background: rgba(30,41,59,0.5); padding: 1rem 1.5rem; border-radius: 0.5rem; list-style: none;">
+            <div style="color: var(--text-main);">
+                <h3 style="color: var(--accent-cyan); font-size: 0.9rem; text-transform: uppercase; margin-top: 1.5rem;">Estudiantes</h3>
+                <ul style="background: #f1f5f9; padding: 1rem 1.5rem; border-radius: 0.5rem; list-style: none;">
                     <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                        <div style="width: 32px; height: 32px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: #94a3b8;">BP</div>
-                        <span style="font-weight: 500; color: #e2e8f0;">Berlanga Pablo María Teresa</span>
+                        <div style="width: 32px; height: 32px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: #64748b;">BP</div>
+                        <span style="font-weight: 500; color: var(--text-main);">Berlanga Pablo María Teresa</span>
                     </li>
                     <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
-                        <div style="width: 32px; height: 32px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: #94a3b8;">GR</div>
-                        <span style="font-weight: 500; color: #e2e8f0;">García Ramos Cruz Enrique</span>
+                        <div style="width: 32px; height: 32px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: #64748b;">GR</div>
+                        <span style="font-weight: 500; color: var(--text-main);">García Ramos Cruz Enrique</span>
                     </li>
                     <li style="display: flex; align-items: center; gap: 0.75rem;">
-                        <div style="width: 32px; height: 32px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: #94a3b8;">MH</div>
-                        <span style="font-weight: 500; color: #e2e8f0;">Méndez Hernández Teresa de Jesús</span>
+                        <div style="width: 32px; height: 32px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: #64748b;">MH</div>
+                        <span style="font-weight: 500; color: var(--text-main);">Méndez Hernández Teresa de Jesús</span>
                     </li>
                 </ul>
                 <h3 style="color: #a855f7; font-size: 0.9rem; text-transform: uppercase; margin-top: 1.5rem;">Docente</h3>
-                <div style="background: linear-gradient(to right, #1e293b, #0f172a); padding: 1rem; border-left: 4px solid #a855f7; border-radius: 0.5rem; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                <div style="background: linear-gradient(to right, #f1f5f9, #e2e8f0); padding: 1rem; border-left: 4px solid #a855f7; border-radius: 0.5rem; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                     <div style="background: rgba(168, 85, 247, 0.1); padding: 0.5rem; border-radius: 50%;">
                         <svg class="icon" style="color: #a855f7; width: 24px; height: 24px;" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
                     </div>
-                    <span style="font-weight: bold; font-size: 1.1rem; color: white;">Dr. Isaías Avendaño Cortes</span>
+                    <span style="font-weight: bold; font-size: 1.1rem; color: var(--text-main);">Dr. Isaías Avendaño Cortes</span>
                 </div>
             </div>
             <div style="margin-top: 2rem; text-align: center;">
-                <button class="btn-pill btn-ghost" style="margin: 0 auto;" onclick="closeModal('modal-credits')">Cerrar</button>
+                <button class="btn-pill btn-ghost" style="margin: 0 auto; color: var(--text-muted); border-color: var(--border);" onclick="closeModal('modal-credits')">Cerrar</button>
             </div>
         </div>
     </div>
@@ -760,27 +777,27 @@
         <div class="modal">
             <button class="modal-close" onclick="closeModal('modal-refs')">&times;</button>
             <h2 class="modal-title">
-                <svg class="icon" style="color: #22d3ee;" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                <svg class="icon" style="color: var(--accent-cyan);" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                 Referencias APA 7
             </h2>
-            <div style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
-                <p style="margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid #22d3ee;">
+            <div style="color: var(--text-main); font-size: 0.9rem; line-height: 1.6;">
+                <p style="margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--accent-cyan);">
                     Cisco Networking Academy. (s.f.). <em>CCNA: Introduction to Networks</em>. Cisco.
                 </p>
-                <p style="margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid #3b82f6;">
+                <p style="margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--accent-blue);">
                     International Organization for Standardization. (1994). <em>Information technology — Open Systems Interconnection</em> (ISO/IEC 7498-1:1994).
                 </p>
                 <p style="margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid #a855f7;">
                     Tanenbaum, A. S., & Feamster, N. (2021). <em>Computer Networks</em> (6th ed.). Pearson.
                 </p>
                 
-                <h3 style="color: #facc15; font-size: 0.9rem; text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 0.5rem;">Créditos de Imágenes</h3>
-                <p style="font-size: 0.8rem; color: #94a3b8;">
+                <h3 style="color: #eab308; font-size: 0.9rem; text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 0.5rem;">Créditos de Imágenes</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">
                     Todas las imágenes utilizadas en las tarjetas de detalle son propiedad de sus respectivos autores en <strong>Unsplash.com</strong> y se utilizan con fines ilustrativos.
                 </p>
             </div>
             <div style="margin-top: 2rem; text-align: center;">
-                <button class="btn-pill btn-ghost" style="margin: 0 auto;" onclick="closeModal('modal-refs')">Cerrar</button>
+                <button class="btn-pill btn-ghost" style="margin: 0 auto; color: var(--text-muted); border-color: var(--border);" onclick="closeModal('modal-refs')">Cerrar</button>
             </div>
         </div>
     </div>
