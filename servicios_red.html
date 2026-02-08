@@ -48,7 +48,7 @@
                 </a>
                 <button onclick="toggleModal('creditsModal')" class="bg-white/10 hover:bg-white/20 transition-all border border-white/30 px-5 py-2 rounded-full text-xs flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a7 7 0 00-7 7v1h11v-1a7 7 0 00-7-7z" />
+                        <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                     Créditos
                 </button>
@@ -64,7 +64,6 @@
 
     <main class="container mx-auto px-4 max-w-6xl">
         <header class="mb-12 text-center">
-            <!-- Título "Servicios de Red" eliminado según solicitud -->
             <p class="text-slate-500 max-w-2xl mx-auto italic text-lg">Guía interactiva sobre los protocolos fundamentales de la capa de aplicación.</p>
         </header>
 
@@ -87,7 +86,7 @@
                         </svg>
                     </div>
                     <p class="text-2xl font-bold text-slate-800 mb-2">Análisis Técnico de Protocolos</p>
-                    <p class="max-w-md mx-auto">Selecciona un servicio del catálogo para visualizar su funcionamiento técnico, flujo de datos y diagramas de red.</p>
+                    <p class="max-w-md mx-auto">Selecciona un servicio del catálogo para visualizar su funcionamiento técnico, ejemplos prácticos y diagramas de red.</p>
                 </div>
             </div>
         </div>
@@ -109,7 +108,7 @@
                 </div>
                 <h2 class="text-2xl font-bold uppercase tracking-tight">Créditos</h2>
             </div>
-            <div class="p-8 space-y-6 bg-white text-inter">
+            <div class="p-8 space-y-6 bg-white">
                 <div>
                     <h3 class="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-4 text-center italic">Equipo de Estudiantes</h3>
                     <ul class="space-y-4">
@@ -146,13 +145,10 @@
             </div>
             <div class="p-8 space-y-4 bg-slate-50 font-semibold text-slate-700">
                 <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
-                    <p>Tanenbaum, A. S., & Wetherall, D. (2011). <span class="italic font-normal">Redes de Computadoras</span>. Pearson Educación.</p>
+                    <p>Tanenbaum, A. S., & Wetherall, D. (2011). <span class="italic font-normal text-slate-500">Redes de Computadoras</span>. Pearson Educación.</p>
                 </div>
                 <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
-                    <p>Kurose, J. F., & Ross, K. W. (2017). <span class="italic font-normal">Redes de computadoras: un enfoque descendente</span>. Pearson.</p>
-                </div>
-                <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
-                    <p>Stallings, W. (2014). <span class="italic font-normal">Comunicaciones y redes de computadores</span>. Pearson Educación.</p>
+                    <p>Kurose, J. F., & Ross, K. W. (2017). <span class="italic font-normal text-slate-500">Redes de computadoras: un enfoque descendente</span>. Pearson.</p>
                 </div>
             </div>
             <div class="p-4 bg-white text-center border-t">
@@ -169,10 +165,11 @@
                 fullName: 'Dynamic Host Configuration Protocol',
                 ports: 'UDP 67, 68',
                 color: 'indigo',
-                desc: 'Permite la asignación automática de direcciones IP a los nodos de la red para evitar conflictos de direccionamiento.',
+                desc: 'Es un protocolo clave que automatiza la configuración IP. Sin DHCP, cada vez que conectas tu celular a un Wi-Fi nuevo, tendrías que pedirle al dueño la IP libre, la máscara y el gateway para escribirlos a mano en los ajustes. DHCP hace este trabajo por ti en milisegundos.',
+                example: 'Llegas a un café con tu laptop. El router del café (Servidor DHCP) tiene un rango configurado de 192.168.1.100 a 192.168.1.200. En cuanto te conectas, tu laptop recibe automáticamente la IP 192.168.1.105 sin que tú hagas nada.',
                 steps: ['1. DISCOVER (Cliente busca)', '2. OFFER (Servidor ofrece IP)', '3. REQUEST (Cliente pide formalmente)', '4. ACK (Confirmación final)'],
                 svg: `<svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="60" width="80" height="80" rx="10" fill="#E0E7FF" stroke="#4F46E5" stroke-width="2"/><text x="25" y="105" fill="#4338CA" font-family="Inter" font-weight="bold" font-size="12">CLIENTE</text><rect x="310" y="60" width="80" height="80" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/><text x="320" y="105" fill="#4338CA" font-family="Inter" font-weight="bold" font-size="12">SERVER</text><path d="M100 80H300" stroke="#4F46E5" stroke-width="2" stroke-dasharray="4 4"/><path d="M300 100H100" stroke="#4F46E5" stroke-width="2" stroke-dasharray="4 4"/><path d="M100 120H300" stroke="#4F46E5" stroke-width="2" stroke-dasharray="4 4"/><path d="M300 140H100" stroke="#4F46E5" stroke-width="2" stroke-dasharray="4 4"/><text x="160" y="75" fill="#6366F1" font-size="10">1. DISCOVER</text><text x="160" y="95" fill="#6366F1" font-size="10">2. OFFER</text><text x="160" y="115" fill="#6366F1" font-size="10">3. REQUEST</text><text x="160" y="135" fill="#6366F1" font-size="10">4. ACK</text></svg>`,
-                funFact: 'DORA es el acrónimo técnico para recordar el proceso de 4 pasos de DHCP.'
+                funFact: 'DORA (Discover, Offer, Request, Ack) es la regla para el examen.'
             },
             {
                 id: 'dns',
@@ -180,10 +177,11 @@
                 fullName: 'Domain Name System',
                 ports: 'UDP/TCP 53',
                 color: 'cyan',
-                desc: 'Traduce nombres de dominio legibles por humanos (www.google.com) en direcciones IP numéricas que las máquinas pueden entender.',
+                desc: 'Es el "traductor" de Internet. Las computadoras solo entienden números (IPs), pero los humanos recordamos palabras. DNS permite que escribas una dirección web y la asocia inmediatamente con la ubicación física (IP) del servidor que aloja esa página.',
+                example: 'Escribes "google.com" en tu navegador. Tu computadora le pregunta al DNS: "¿Dónde está google.com?". El DNS responde: "Está en la IP 142.250.189.14". Tu navegador entonces viaja a esa IP para descargar la página.',
                 steps: ['1. Consulta al Resolver local', '2. Servidores Raíz (Root)', '3. Servidores TLD (.com, .mx)', '4. Servidor Autoritativo final'],
                 svg: `<svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="200" cy="40" r="25" fill="#CFFAFE" stroke="#0891B2" stroke-width="2"/><text x="185" y="45" fill="#164E63" font-size="10" font-weight="bold">RAÍZ</text><path d="M200 65V90" stroke="#0891B2" stroke-width="2"/><circle cx="150" cy="115" r="25" fill="#CFFAFE" stroke="#0891B2" stroke-width="2"/><text x="140" y="120" fill="#164E63" font-size="10" font-weight="bold">.COM</text><circle cx="250" cy="115" r="25" fill="#CFFAFE" stroke="#0891B2" stroke-width="2"/><text x="240" y="120" fill="#164E63" font-size="10" font-weight="bold">.NET</text><path d="M150 140V160" stroke="#0891B2" stroke-width="2"/><rect x="110" y="160" width="80" height="30" rx="5" fill="#0891B2"/><text x="120" y="180" fill="white" font-size="8">GOOGLE.COM</text></svg>`,
-                funFact: 'Existen solo 13 grupos de servidores raíz lógicos que mantienen toda la internet funcionando.'
+                funFact: 'Si el DNS falla, Internet "no funciona", aunque las IPs sigan ahí.'
             },
             {
                 id: 'remote',
@@ -191,10 +189,11 @@
                 fullName: 'Secure Shell / Telnet',
                 ports: 'TCP 22, 23',
                 color: 'rose',
-                desc: 'Protocolos de acceso remoto. SSH cifra toda la sesión y las credenciales, mientras que Telnet es inseguro por enviar datos en texto plano.',
+                desc: 'Permiten tomar el control de una computadora o router desde lejos, como si estuvieras sentado frente a ella. SSH es la versión moderna y segura (cifrada), mientras que Telnet es como gritar tu contraseña en una habitación llena de gente.',
+                example: 'Un administrador de red está en su casa y necesita reiniciar un Router en la oficina cuya IP es 201.10.5.2. Abre una terminal SSH, se conecta de forma cifrada a esa IP, mete su clave y ejecuta el comando de reinicio de forma segura.',
                 steps: ['1. Establecimiento TCP', '2. Intercambio de claves (SSH)', '3. Autenticación de usuario', '4. Ejecución de comandos'],
                 svg: `<svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="50" y="80" width="60" height="40" rx="5" fill="#FFE4E6" stroke="#E11D48" stroke-width="2"/><text x="62" y="105" fill="#9F1239" font-size="10">ADMIN</text><rect x="290" y="80" width="60" height="40" rx="5" fill="#FFE4E6" stroke="#E11D48" stroke-width="2"/><text x="300" y="105" fill="#9F1239" font-size="10">ROUTER</text><path d="M110 100H290" stroke="#E11D48" stroke-width="15" stroke-opacity="0.2"/><path d="M110 100H290" stroke="#E11D48" stroke-width="2" stroke-dasharray="10 5"/><text x="160" y="90" fill="#E11D48" font-size="10" font-weight="bold">TÚNEL CIFRADO (SSH)</text></svg>`,
-                funFact: 'Si usas Telnet en una red pública, cualquiera puede robar tu contraseña fácilmente.'
+                funFact: 'SSH usa criptografía simétrica y asimétrica para protegerte.'
             },
             {
                 id: 'ftp',
@@ -202,10 +201,11 @@
                 fullName: 'File Transfer Protocol',
                 ports: 'TCP 20, 21',
                 color: 'amber',
-                desc: 'Protocolo especializado en la transferencia de archivos. Utiliza un canal de control y un canal de datos independiente.',
+                desc: 'Es el sistema de "camiones de carga" de la red. Está diseñado específicamente para mover archivos grandes. Usa dos conexiones: una para decir "quiero bajar el archivo X" y otra para mover los bits del archivo.',
+                example: 'Un diseñador gráfico termina un catálogo de 2GB. En lugar de mandarlo por correo (que no soporta tanto peso), lo sube al servidor de la imprenta "ftp.imprenta.com" usando un programa como FileZilla para asegurar que no se pierda información.',
                 steps: ['1. Conexión Control (P21)', '2. Login y Autenticación', '3. Apertura Canal Datos (P20)', '4. Transferencia de flujo'],
                 svg: `<svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="50" y="50" width="300" height="100" rx="20" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/><path d="M80 80H320" stroke="#D97706" stroke-width="2"/><path d="M80 120H320" stroke="#D97706" stroke-width="2" stroke-dasharray="5 5"/><text x="140" y="75" fill="#B45309" font-size="10">CANAL CONTROL (PUERTO 21)</text><text x="140" y="115" fill="#B45309" font-size="10">CANAL DATOS (PUERTO 20)</text></svg>`,
-                funFact: 'FTP separa el envío de órdenes del envío de los archivos para mejorar la eficiencia.'
+                funFact: 'Es uno de los protocolos más veteranos; nació antes que la propia Web.'
             },
             {
                 id: 'www',
@@ -213,10 +213,11 @@
                 fullName: 'Hypertext Transfer Protocol Secure',
                 ports: 'TCP 80, 443',
                 color: 'emerald',
-                desc: 'La base de la navegación web. HTTPS añade seguridad mediante certificados SSL/TLS para cifrar la comunicación.',
+                desc: 'Es el lenguaje de los navegadores. Permite solicitar y recibir páginas web. La "S" final en HTTPS significa que hay un "túnel" de seguridad (SSL/TLS) que protege tus datos contra espías.',
+                example: 'Entras a la banca en línea de tu banco. Verás un candado en la barra de direcciones. Esto indica que estás usando HTTPS (Puerto 443). Gracias a esto, si alguien intercepta el Wi-Fi, solo verá códigos basura y no tu número de cuenta.',
                 steps: ['1. Handshake TCP/TLS', '2. Solicitud GET/POST', '3. Envío de HTML/CSS/JS', '4. Renderizado en navegador'],
                 svg: `<svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 100Q200 20 350 100T50 100" fill="#D1FAE5" stroke="#059669" stroke-width="4"/><path d="M200 60V80" stroke="#059669" stroke-width="2"/><rect x="185" y="80" width="30" height="40" rx="5" fill="#059669"/><text x="155" y="140" fill="#065F46" font-size="12" font-weight="bold">SITIO SEGURO (HTTPS)</text></svg>`,
-                funFact: 'HTTPS no solo protege tus datos, también permite que las páginas carguen más rápido con HTTP/2.'
+                funFact: 'HTTPS usa certificados para probar que el sitio es quien dice ser.'
             },
             {
                 id: 'mail',
@@ -224,10 +225,11 @@
                 fullName: 'SMTP, POP, IMAP',
                 ports: 'TCP 25, 110, 143',
                 color: 'violet',
-                desc: 'Protocolos para la gestión de correo electrónico. SMTP para el envío, POP e IMAP para la recepción y sincronización.',
+                desc: 'Es un equipo de tres protocolos: SMTP es el cartero que lleva el sobre al destino. POP e IMAP son las formas en que tú abres tu buzón. IMAP es el favorito hoy porque mantiene tus correos sincronizados en el móvil y la PC.',
+                example: 'Envías un correo a "profesor@universidad.edu" desde tu Gmail. Tu servidor usa SMTP para entregarlo. El profesor abre su iPhone y, gracias a IMAP, ve el mensaje; más tarde lo abre en su PC y el mensaje sigue ahí marcado como "leído".',
                 steps: ['1. Envío vía SMTP', '2. Salto entre servidores MTA', '3. Almacenamiento en buzón', '4. Sincronización vía IMAP'],
                 svg: `<svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="70" width="60" height="40" rx="5" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2"/><rect x="170" y="70" width="60" height="40" rx="5" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2"/><rect x="320" y="70" width="60" height="40" rx="5" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2"/><path d="M80 90H170" stroke="#7C3AED" stroke-width="2"/><path d="M230 90H320" stroke="#7C3AED" stroke-width="2"/><text x="100" y="85" fill="#6D28D9" font-size="8">SMTP</text><text x="250" y="85" fill="#6D28D9" font-size="8">IMAP/POP</text></svg>`,
-                funFact: 'IMAP te permite ver tus correos en el celular y la PC al mismo tiempo sin borrarlos del servidor.'
+                funFact: 'SMTP solo sirve para enviar; nunca podrías recibir correos solo con él.'
             }
         ];
 
@@ -243,7 +245,7 @@
             panel.innerHTML = `
                 <div class="flex flex-col md:flex-row justify-between items-start gap-6 mb-10 border-b pb-8">
                     <div>
-                        <span class="bg-${s.color}-100 text-${s.color}-700 text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-3 inline-block">Análisis Activo</span>
+                        <span class="bg-${s.color}-100 text-${s.color}-700 text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-3 inline-block shadow-sm">Análisis Activo</span>
                         <h2 class="text-5xl font-black text-slate-800 tracking-tight">${s.name}</h2>
                         <p class="text-xl text-slate-500 italic">${s.fullName}</p>
                     </div>
@@ -252,18 +254,28 @@
                         <span class="text-2xl font-mono font-bold text-indigo-700">${s.ports}</span>
                     </div>
                 </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div class="space-y-8">
                         <div>
                             <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-3">
-                                <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-indigo-600">i</div>
-                                ¿Qué es?
+                                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white text-xs">A</div>
+                                Definición y Función
                             </h4>
-                            <p class="text-slate-600 text-sm leading-relaxed">${s.desc}</p>
+                            <p class="text-slate-600 leading-relaxed text-sm">${s.desc}</p>
                         </div>
+                        
+                        <div class="bg-indigo-50/50 p-6 rounded-3xl border border-indigo-100">
+                            <h4 class="font-bold text-indigo-800 mb-3 flex items-center gap-3">
+                                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white text-xs">B</div>
+                                Ejemplo Digerible
+                            </h4>
+                            <p class="text-indigo-900/80 text-sm leading-relaxed font-medium italic">"${s.example}"</p>
+                        </div>
+
                         <div>
                             <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-3">
-                                <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-indigo-600">#</div>
+                                <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-indigo-600 text-xs">C</div>
                                 Pasos Técnicos
                             </h4>
                             <div class="space-y-2 pl-2">
@@ -271,13 +283,14 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="space-y-8">
                         <div class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-[2rem] p-4 diagram-container shadow-inner">
-                            <div class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mb-2 text-center">Referencia Visual</div>
+                            <div class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mb-2 text-center">Referencia Visual del Flujo</div>
                             ${s.svg}
                         </div>
                         <div class="bg-${s.color}-50 border p-6 rounded-3xl shadow-sm">
-                            <h4 class="font-bold text-${s.color}-800 text-sm mb-2 italic">¿Sabías que?</h4>
+                            <h4 class="font-bold text-${s.color}-800 text-sm mb-2 italic">Dato curioso</h4>
                             <p class="text-xs text-${s.color}-700 font-medium">${s.funFact}</p>
                         </div>
                     </div>
@@ -293,12 +306,12 @@
             btn.onclick = () => showDetail(s.id);
             btn.className = "service-btn w-full flex items-center gap-5 p-5 bg-white border border-slate-200 rounded-3xl transition-all hover:border-indigo-300 hover:shadow-lg text-left group";
             btn.innerHTML = `
-                <div class="bg-${s.color}-100 text-${s.color}-700 p-3.5 rounded-2xl group-hover:scale-105 transition-transform shrink-0">
+                <div class="bg-${s.color}-100 text-${s.color}-700 p-3.5 rounded-2xl group-hover:scale-105 transition-transform shrink-0 shadow-sm">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                 </div>
                 <div class="flex-1">
-                    <h4 class="font-black text-slate-800 text-lg group-hover:text-indigo-600 transition-colors">${s.name}</h4>
-                    <p class="text-[10px] text-slate-400 font-mono">${s.ports}</p>
+                    <h4 class="font-black text-slate-800 text-lg group-hover:text-indigo-600 transition-colors tracking-tight">${s.name}</h4>
+                    <p class="text-[10px] text-slate-400 font-mono tracking-wider">${s.ports}</p>
                 </div>
             `;
             list.appendChild(btn);
