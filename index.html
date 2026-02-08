@@ -1,1 +1,108 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnología de Redes - Universidad TENAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        /* Estilos personalizados para las tarjetas de navegación */
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Encabezado Institucional -->
+    <header class="bg-blue-900 text-white py-12 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">UNIVERSIDAD TENAM</h1>
+            <h2 class="text-xl md:text-2xl font-light tracking-widest opacity-90">MAESTRÍA EN INGENIERÍA INTELIGENTE</h2>
+            <div class="mt-6 inline-block bg-blue-700 px-6 py-2 rounded-full font-semibold">
+                MATERIA: TECNOLOGÍA DE REDES
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        
+        <!-- Introducción a la materia -->
+        <section class="mb-16 bg-white p-8 rounded-2xl shadow-sm border-l-8 border-blue-600">
+            <h3 class="text-3xl font-bold mb-4 text-blue-900">Introducción: Tecnología de Redes</h3>
+            <p class="text-lg text-gray-700 leading-relaxed">
+                La asignatura de Tecnología de Redes constituye el pilar fundamental para comprender cómo fluye la información en el mundo digital actual. A través de este curso, exploramos la interconexión de sistemas, el diseño de arquitecturas robustas y la optimización de protocolos de comunicación que permiten que la Ingeniería Inteligente alcance su máximo potencial en entornos distribuidos.
+            </p>
+        </section>
+
+        <!-- Menú de navegación interactivo -->
+        <div class="grid md:grid-cols-2 gap-8 mb-16">
+            
+            <!-- Modelo OSI Card -->
+            <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800" alt="[Imagen de Red Global y Conectividad]" class="w-full h-56 object-cover">
+                <div class="p-8 text-center">
+                    <h4 class="text-2xl font-bold mb-3 text-blue-800">Modelo OSI</h4>
+                    <p class="text-gray-600 mb-6">Estudio integral de la comunicación de red a través de sus siete capas fundamentales.</p>
+                    <a href="modelo_osi.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-colors">
+                        Acceder
+                    </a>
+                </div>
+            </div>
+
+            <!-- Calculadora IP Card -->
+            <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100">
+                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800&auto=format&fit=crop" alt="[Imagen de Hardware de Red y Cables Ethernet]" class="w-full h-56 object-cover">
+                <div class="p-8 text-center">
+                    <h4 class="text-2xl font-bold mb-3 text-blue-800">Calculadora de IPs y Clases</h4>
+                    <p class="text-gray-600 mb-6">Herramienta para el cálculo de subredes, máscaras y segmentación de direcciones IPv4.</p>
+                    <a href="calculadora_ip.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-colors">
+                        Acceder
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sección de Créditos -->
+        <section class="bg-gray-800 text-gray-300 p-10 rounded-3xl">
+            <div class="grid md:grid-cols-2 gap-10">
+                <div>
+                    <h5 class="text-blue-400 font-bold uppercase tracking-wider mb-4">Estudiantes</h5>
+                    <ul class="space-y-2 text-lg">
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                            Berlanga Pablo María Teresa
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                            García Ramos Cruz Enrique
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                            Méndez Hernández Teresa de Jesús
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-blue-400 font-bold uppercase tracking-wider mb-4">Docente</h5>
+                    <p class="text-2xl font-semibold text-white">Dr. Isaías Avendaño Cortes</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 text-gray-500 text-sm">
+        <p>© 2026 UNIVERSIDAD TENAM - Ingeniería Inteligente</p>
+    </footer>
+
+</body>
+</html>
