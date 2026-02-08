@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,11 +10,31 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f4f8;
+            scroll-behavior: smooth;
         }
-        /* Estilos personalizados para las tarjetas de navegación */
+        /* Estilos para el efecto de elevación en las tarjetas */
         .card-hover:hover {
             transform: translateY(-5px);
             transition: all 0.3s ease;
+        }
+        /* Gestión de transiciones entre secciones (SPA) */
+        .view-section {
+            display: none;
+        }
+        .view-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .osi-layer, .service-card {
+            transition: all 0.2s ease;
+        }
+        .osi-layer:hover {
+            background-color: #ebf4ff;
+            border-left-width: 12px;
         }
     </style>
 </head>
@@ -24,76 +43,203 @@
     <!-- Encabezado Institucional -->
     <header class="bg-blue-900 text-white py-12 px-4 shadow-lg">
         <div class="max-w-6xl mx-auto text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-2">UNIVERSIDAD TENAM</h1>
+            <h1 class="text-4xl md:text-5xl font-bold mb-2 cursor-pointer" onclick="showView('home')">UNIVERSIDAD TENAM</h1>
             <h2 class="text-xl md:text-2xl font-light tracking-widest opacity-90">MAESTRÍA EN INGENIERÍA INTELIGENTE</h2>
-            <div class="mt-6 inline-block bg-blue-700 px-6 py-2 rounded-full font-semibold">
-                MATERIA: TECNOLOGÍA DE REDES
-            </div>
+            <div class="mt-6 font-mono opacity-80 mb-2">Materia: Tecnología de Redes</div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-12">
+    <main class="max-w-6xl mx-auto px-4 py-8">
         
-        <!-- Introducción a la materia -->
-        <section class="mb-16 bg-white p-8 rounded-2xl shadow-sm border-l-8 border-blue-600">
-            <h3 class="text-3xl font-bold mb-4 text-blue-900">Introducción: Tecnología de Redes</h3>
-            <p class="text-lg text-gray-700 leading-relaxed">
-                La asignatura de Tecnología de Redes constituye el pilar fundamental para comprender cómo fluye la información en el mundo digital actual. A través de este curso, exploramos la interconexión de sistemas, el diseño de arquitecturas robustas y la optimización de protocolos de comunicación que permiten que la Ingeniería Inteligente alcance su máximo potencial en entornos distribuidos.
-            </p>
+        <!-- VISTA: INICIO -->
+        <section id="view-home" class="view-section active">
+            <!-- Introducción a la materia -->
+            <section class="mb-12 bg-white p-8 rounded-2xl shadow-sm border-l-8 border-blue-600">
+                <h3 class="text-3xl font-bold mb-4 text-blue-900">Introducción: Tecnología de Redes</h3>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    La asignatura de Tecnología de Redes constituye el pilar fundamental para comprender cómo fluye la información en el mundo digital actual. Exploramos la interconexión de sistemas y la optimización de protocolos de comunicación.
+                </p>
+            </section>
+
+            <!-- Menú de navegación interactivo -->
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                
+                <!-- Modelo OSI Card -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
+                    <div class="bg-gray-200 h-48 w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800" 
+                             alt="[Imagen de Red Global]" 
+                             onerror="this.src='https://placehold.co/800x400/003366/FFFFFF?text=Modelo+OSI'"
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 text-center flex-grow flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-xl font-bold mb-3 text-blue-800">Modelo OSI</h4>
+                            <p class="text-gray-600 mb-6 text-sm">Estudio integral de la comunicación de red a través de sus siete capas fundamentales.</p>
+                        </div>
+                        <button onclick="showView('osi')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors">
+                            Acceder
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Calculadora IP Card -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
+                    <div class="bg-gray-200 h-48 w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800" 
+                             alt="[Imagen de Infraestructura de Red]" 
+                             onerror="this.src='https://placehold.co/800x400/004080/FFFFFF?text=Calculadora+IP'"
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 text-center flex-grow flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-xl font-bold mb-3 text-blue-800">Calculadora IP</h4>
+                            <p class="text-gray-600 mb-6 text-sm">Herramienta para el cálculo de subredes, máscaras y segmentación IPv4 de forma precisa.</p>
+                        </div>
+                        <button onclick="showView('calc')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors">
+                            Acceder
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Servicios de Red Card -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
+                    <div class="bg-gray-200 h-48 w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=800" 
+                             alt="[Imagen de Servicios de Red]" 
+                             onerror="this.src='https://placehold.co/800x400/002244/FFFFFF?text=Servicios+de+Red'"
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 text-center flex-grow flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-xl font-bold mb-3 text-blue-800">Servicios de Red</h4>
+                            <p class="text-gray-600 mb-6 text-sm">Exploración de protocolos y servicios esenciales como DNS, DHCP, HTTP y seguridad SSH.</p>
+                        </div>
+                        <button onclick="showView('services')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors">
+                            Acceder
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Créditos -->
+            <section class="bg-gray-800 text-gray-300 p-10 rounded-3xl">
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div>
+                        <h5 class="text-blue-400 font-bold uppercase tracking-wider mb-4">Estudiantes</h5>
+                        <ul class="space-y-2 text-lg">
+                            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span> Berlanga Pablo María Teresa</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span> García Ramos Cruz Enrique</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span> Méndez Hernández Teresa de Jesús</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-blue-400 font-bold uppercase tracking-wider mb-4">Docente</h5>
+                        <p class="text-2xl font-semibold text-white">Dr. Isaías Avendaño Cortes</p>
+                    </div>
+                </div>
+            </section>
         </section>
 
-        <!-- Menú de navegación interactivo -->
-        <div class="grid md:grid-cols-2 gap-8 mb-16">
-            
-            <!-- Modelo OSI Card -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100">
-                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800" alt="[Imagen de Red Global y Conectividad]" class="w-full h-56 object-cover">
-                <div class="p-8 text-center">
-                    <h4 class="text-2xl font-bold mb-3 text-blue-800">Modelo OSI</h4>
-                    <p class="text-gray-600 mb-6">Estudio integral de la comunicación de red a través de sus siete capas fundamentales.</p>
-                    <a href="modelo_osi.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-colors">
-                        Acceder
-                    </a>
+        <!-- VISTA: MODELO OSI -->
+        <section id="view-osi" class="view-section">
+            <div class="flex items-center mb-8">
+                <button onclick="showView('home')" class="mr-4 p-2 bg-gray-200 hover:bg-gray-300 rounded-full transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </button>
+                <h3 class="text-3xl font-bold text-blue-900">Modelo OSI</h3>
+            </div>
+            <div class="grid gap-4">
+                <div class="osi-layer bg-white p-6 rounded-xl shadow-sm border-l-8 border-purple-600">
+                    <h4 class="text-xl font-bold text-purple-800">Capa 7: Aplicación (HTTP, FTP, SMTP)</h4>
+                    <p class="text-gray-600">Interfaz directa entre el usuario y los servicios de red.</p>
+                </div>
+                <div class="osi-layer bg-white p-6 rounded-xl shadow-sm border-l-8 border-indigo-600">
+                    <h4 class="text-xl font-bold text-indigo-800">Capa 6: Presentación</h4>
+                    <p class="text-gray-600">Formatea, cifra y comprime la información para su interpretación.</p>
+                </div>
+                <div class="osi-layer bg-white p-6 rounded-xl shadow-sm border-l-8 border-blue-600">
+                    <h4 class="text-xl font-bold text-blue-800">Capa 5: Sesión</h4>
+                    <p class="text-gray-600">Gestiona y controla los diálogos entre aplicaciones remotas.</p>
+                </div>
+                <div class="osi-layer bg-white p-6 rounded-xl shadow-sm border-l-8 border-green-600">
+                    <h4 class="text-xl font-bold text-green-800">Capa 4: Transporte (TCP, UDP)</h4>
+                    <p class="text-gray-600">Responsable de la entrega fiable de datos y control de flujo.</p>
+                </div>
+                <div class="osi-layer bg-white p-6 rounded-xl shadow-sm border-l-8 border-yellow-500">
+                    <h4 class="text-xl font-bold text-yellow-800">Capa 3: Red (IP)</h4>
+                    <p class="text-gray-600">Responsable del direccionamiento lógico y el enrutamiento.</p>
+                </div>
+                <div class="osi-layer bg-white p-6 rounded-xl shadow-sm border-l-8 border-orange-600">
+                    <h4 class="text-xl font-bold text-orange-800">Capa 2: Enlace de Datos (MAC)</h4>
+                    <p class="text-gray-600">Convierte los bits en tramas y asegura el acceso al medio físico.</p>
+                </div>
+                <div class="osi-layer bg-white p-6 rounded-xl shadow-sm border-l-8 border-red-600">
+                    <h4 class="text-xl font-bold text-red-800">Capa 1: Física</h4>
+                    <p class="text-gray-600">Transmisión física de señales a través de cables o inalámbrico.</p>
                 </div>
             </div>
+        </section>
 
-            <!-- Calculadora IP Card -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100">
-                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800&auto=format&fit=crop" alt="[Imagen de Hardware de Red y Cables Ethernet]" class="w-full h-56 object-cover">
-                <div class="p-8 text-center">
-                    <h4 class="text-2xl font-bold mb-3 text-blue-800">Calculadora de IPs y Clases</h4>
-                    <p class="text-gray-600 mb-6">Herramienta para el cálculo de subredes, máscaras y segmentación de direcciones IPv4.</p>
-                    <a href="calculadora_ip.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl transition-colors">
-                        Acceder
-                    </a>
+        <!-- VISTA: CALCULADORA IP -->
+        <section id="view-calc" class="view-section">
+            <div class="flex items-center mb-8">
+                <button onclick="showView('home')" class="mr-4 p-2 bg-gray-200 hover:bg-gray-300 rounded-full transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </button>
+                <h3 class="text-3xl font-bold text-blue-900">Calculadora IPv4</h3>
+            </div>
+            <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Dirección IP</label>
+                        <input type="text" id="ip-input" placeholder="Ej. 192.168.1.10" class="w-full p-3 border border-gray-300 rounded-xl font-mono focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Máscara (CIDR)</label>
+                        <select id="cidr-input" class="w-full p-3 border border-gray-300 rounded-xl font-mono"></select>
+                    </div>
+                </div>
+                <button onclick="calculateIP()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-all shadow-md">
+                    Calcular Red
+                </button>
+                <div id="results-area" class="mt-8 hidden grid md:grid-cols-2 gap-4 text-center">
+                    <div class="p-4 bg-gray-50 rounded-xl"><span class="text-xs font-bold uppercase text-gray-400">Dirección de Red</span><div id="res-net" class="text-xl font-bold font-mono text-blue-900"></div></div>
+                    <div class="p-4 bg-gray-50 rounded-xl"><span class="text-xs font-bold uppercase text-gray-400">Broadcast</span><div id="res-broadcast" class="text-xl font-bold font-mono text-red-900"></div></div>
                 </div>
             </div>
+        </section>
 
-        </div>
-
-        <!-- Sección de Créditos -->
-        <section class="bg-gray-800 text-gray-300 p-10 rounded-3xl">
-            <div class="grid md:grid-cols-2 gap-10">
-                <div>
-                    <h5 class="text-blue-400 font-bold uppercase tracking-wider mb-4">Estudiantes</h5>
-                    <ul class="space-y-2 text-lg">
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                            Berlanga Pablo María Teresa
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                            García Ramos Cruz Enrique
-                        </li>
-                        <li class="flex items-center">
-                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                            Méndez Hernández Teresa de Jesús
-                        </li>
-                    </ul>
+        <!-- VISTA: SERVICIOS DE RED -->
+        <section id="view-services" class="view-section">
+            <div class="flex items-center mb-8">
+                <button onclick="showView('home')" class="mr-4 p-2 bg-gray-200 hover:bg-gray-300 rounded-full transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </button>
+                <h3 class="text-3xl font-bold text-blue-900">Servicios de Red</h3>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-blue-500">
+                    <h4 class="text-xl font-bold text-blue-900">DNS (Domain Name System)</h4>
+                    <p class="text-gray-600">Traduce nombres de dominio legibles en direcciones IP numéricas para la navegación.</p>
                 </div>
-                <div>
-                    <h5 class="text-blue-400 font-bold uppercase tracking-wider mb-4">Docente</h5>
-                    <p class="text-2xl font-semibold text-white">Dr. Isaías Avendaño Cortes</p>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-green-500">
+                    <h4 class="text-xl font-bold text-green-900">DHCP</h4>
+                    <p class="text-gray-600">Asigna automáticamente direcciones IP a los dispositivos en la red de forma dinámica.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-orange-500">
+                    <h4 class="text-xl font-bold text-orange-900">HTTP / HTTPS</h4>
+                    <p class="text-gray-600">Base de la transferencia de datos en la web; HTTPS añade una capa de seguridad TLS.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-t-4 border-gray-700">
+                    <h4 class="text-xl font-bold text-gray-900">SSH (Secure Shell)</h4>
+                    <p class="text-gray-600">Permite la administración remota segura de servidores mediante canales cifrados.</p>
                 </div>
             </div>
         </section>
@@ -104,5 +250,44 @@
         <p>© 2026 UNIVERSIDAD TENAM - Ingeniería Inteligente</p>
     </footer>
 
+    <script>
+        // Navegación fluida entre secciones (SPA)
+        function showView(viewId) {
+            document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+            const target = document.getElementById('view-' + viewId);
+            if (target) target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Generación de opciones de máscara CIDR
+        const cidrSelect = document.getElementById('cidr-input');
+        if (cidrSelect) {
+            for (let i = 1; i <= 32; i++) {
+                const opt = document.createElement('option');
+                opt.value = i; opt.text = '/' + i;
+                if (i === 24) opt.selected = true;
+                cidrSelect.appendChild(opt);
+            }
+        }
+
+        // Lógica de cálculo de red IPv4
+        function calculateIP() {
+            const ipStr = document.getElementById('ip-input').value.trim();
+            const cidr = parseInt(document.getElementById('cidr-input').value);
+            const parts = ipStr.split('.');
+            if (parts.length !== 4) return;
+            
+            const ipLong = parts.reduce((acc, octet) => (acc << 8) + parseInt(octet), 0) >>> 0;
+            const mask = (0xFFFFFFFF << (32 - cidr)) >>> 0;
+            const net = (ipLong & mask) >>> 0;
+            const broad = (net | (~mask)) >>> 0;
+
+            const toIp = (l) => [(l >>> 24) & 255, (l >>> 16) & 255, (l >>> 8) & 255, l & 255].join('.');
+            
+            document.getElementById('res-net').textContent = toIp(net);
+            document.getElementById('res-broadcast').textContent = toIp(broad);
+            document.getElementById('results-area').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
