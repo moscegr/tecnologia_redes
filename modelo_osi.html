@@ -99,18 +99,25 @@
             text-transform: uppercase;
         }
 
+        /* LOGO CORREGIDO: Separamos el color de los iconos del texto */
         .logo {
             display: flex;
             align-items: center;
             gap: 0.75rem;
             font-size: 1.5rem;
             font-weight: bold;
-            background: linear-gradient(to right, #22d3ee, #3b82f6);
-            -webkit-background-clip: text;
-            color: transparent;
+            color: var(--accent-cyan); /* Color base para los iconos */
             text-align: center;
             justify-content: center;
             flex: 1; /* Ocupa espacio central */
+            flex-wrap: wrap; /* Permite que se ajuste en móviles */
+        }
+
+        .logo-text {
+            background: linear-gradient(to right, #22d3ee, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent; /* Solo el texto es transparente para mostrar el degradado */
         }
 
         .controls {
@@ -553,8 +560,8 @@
 
             <!-- Bloque Central: Título -->
             <div class="logo">
-                <svg class="icon" style="width: 32px; height: 32px;" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                Modelo OSI Interactivo
+                <svg class="icon" style="width: 32px; height: 32px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                <span class="logo-text">Modelo OSI Interactivo</span>
             </div>
 
             <!-- Bloque Derecho: Controles -->
