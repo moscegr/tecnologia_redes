@@ -1,2 +1,3 @@
-# modelo_osi
-modelo interactivo del modelo osi de cisco
+# UNIVERSIDAD TENAM
+# MAESTRÍA EN INGENIERÍA INTELIGENTE
+# MATERIA TECNOLOGÍA DE REDES
