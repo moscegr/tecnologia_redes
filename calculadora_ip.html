@@ -12,6 +12,7 @@
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         .modal-scroll { max-height: 70vh; overflow-y: auto; }
+        .bit-box:hover { transform: scale(1.05); }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen pb-12">
@@ -35,14 +36,12 @@
                 </div>
             </div>
             <div class="flex flex-wrap justify-center gap-3">
-                <!-- Botón Inicio -->
                 <a href="index.html" class="bg-indigo-600 hover:bg-indigo-500 transition-all border border-white/30 px-5 py-2 rounded-full font-semibold text-sm flex items-center gap-2 shadow-md">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                     Inicio
                 </a>
-                <!-- Botón Créditos movido antes de Referencias -->
                 <button onclick="toggleModal('creditsModal')" class="bg-white/10 hover:bg-white/20 transition-all border border-white/30 px-5 py-2 rounded-full font-semibold text-sm flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
@@ -100,6 +99,13 @@
                     <div class="text-4xl font-black mb-2" id="ipClassDisplay">Clase C</div>
                     <p class="text-sm opacity-90" id="classRangeDisplay">Rango: 192.0.0.0 a 223.255.255.255</p>
                 </div>
+
+                <!-- Cálculo de Subredes (NUEVO) -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-l-4 border-l-indigo-500">
+                    <h3 class="text-slate-400 text-xs uppercase tracking-widest font-bold mb-1">Cálculo de Subredes</h3>
+                    <div class="text-3xl font-black text-slate-800 font-mono" id="subnetsDisplay">1</div>
+                    <p class="text-[10px] text-slate-400 mt-2 italic" id="subnetsFormula">Basado en máscara por defecto /24</p>
+                </div>
             </div>
 
             <!-- Resultados y Binarios -->
@@ -108,8 +114,11 @@
                 <!-- Tabla de Octetos Binarios -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
-                        <h2 class="text-sm font-bold text-slate-700 uppercase tracking-tight">Conversión a Binario</h2>
-                        <span class="text-[10px] font-mono bg-indigo-100 px-2 py-1 rounded text-indigo-600 font-bold text-center">Base 2</span>
+                        <div class="flex flex-col">
+                            <h2 class="text-sm font-bold text-slate-700 uppercase tracking-tight">Generador Binario Inverso</h2>
+                            <p class="text-[10px] text-slate-400">Haz clic en los bits para cambiar el valor</p>
+                        </div>
+                        <span class="text-[10px] font-mono bg-indigo-100 px-2 py-1 rounded text-indigo-600 font-bold text-center">Interactivo</span>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
@@ -141,12 +150,28 @@
                         <p class="text-xs font-bold text-slate-400 uppercase mb-1">Hosts Útiles</p>
                         <p class="text-xl font-bold text-indigo-600 font-mono" id="hostsDisplay">254</p>
                     </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-1">Dirección de Red</p>
+                        <p class="text-xl font-bold text-slate-800 font-mono" id="netAddrDisplay">-</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-1">Dirección de Broadcast</p>
+                        <p class="text-xl font-bold text-slate-800 font-mono" id="broadAddrDisplay">-</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-xs font-bold text-emerald-600 uppercase mb-1">Primer Host Utilizable</p>
+                        <p class="text-xl font-bold text-slate-800 font-mono" id="firstHostDisplay">-</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-xs font-bold text-emerald-600 uppercase mb-1">Último Host Utilizable</p>
+                        <p class="text-xl font-bold text-slate-800 font-mono" id="lastHostDisplay">-</p>
+                    </div>
                 </div>
 
             </div>
         </div>
 
-        <!-- Nueva Sección: Explicación de Clases -->
+        <!-- Sección Educativa -->
         <section class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-8">
             <div class="text-center max-w-2xl mx-auto">
                 <h2 class="text-3xl font-black text-slate-800 mb-2">Tipos de Clases de IP</h2>
@@ -217,20 +242,12 @@
         </section>
     </main>
 
-    <!-- Modal de Referencias Bibliográficas -->
+    <!-- Modales -->
     <div id="refsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
             <div class="bg-emerald-700 p-6 text-white flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <div class="p-2 bg-white/20 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold uppercase tracking-tight">Referencias Bibliográficas</h2>
-                        <p class="text-emerald-100 text-[10px] uppercase font-bold tracking-widest opacity-80">Fuentes de Estudio en Redes</p>
-                    </div>
+                    <h2 class="text-xl font-bold uppercase tracking-tight">Referencias Bibliográficas</h2>
                 </div>
                 <button onclick="toggleModal('refsModal')" class="text-white hover:bg-black/10 p-2 rounded-full transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -238,83 +255,34 @@
                     </svg>
                 </button>
             </div>
-            
             <div class="p-8 modal-scroll space-y-6 bg-slate-50">
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-200 transition-colors">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                     <p class="text-xs font-bold text-emerald-600 mb-1">Libro de Texto Principal</p>
-                    <p class="text-slate-700 leading-relaxed font-semibold">Tanenbaum, A. S., & Wetherall, D. (2011). <span class="italic">Redes de Computadoras</span>. Pearson Educación.</p>
+                    <p class="text-slate-700 leading-relaxed font-semibold italic">Tanenbaum, A. S., & Wetherall, D. (2011). Redes de Computadoras. Pearson Educación.</p>
                 </div>
-
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-200 transition-colors">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
                     <p class="text-xs font-bold text-emerald-600 mb-1">Enfoque de Protocolos</p>
-                    <p class="text-slate-700 leading-relaxed font-semibold">Kurose, J. F., & Ross, K. W. (2017). <span class="italic">Redes de computadoras: un enfoque descendente</span>. Pearson.</p>
-                </div>
-
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-200 transition-colors">
-                    <p class="text-xs font-bold text-emerald-600 mb-1">Referencia Técnica</p>
-                    <p class="text-slate-700 leading-relaxed font-semibold">Stallings, W. (2014). <span class="italic">Comunicaciones y redes de computadores</span>. Pearson Educación.</p>
-                </div>
-
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-200 transition-colors">
-                    <p class="text-xs font-bold text-emerald-600 mb-1">Certificación Industrial</p>
-                    <p class="text-slate-700 leading-relaxed font-semibold">Cisco Networking Academy. (2022). <span class="italic">CCNA: Introducción a las redes (ITN) v7.0</span>.</p>
+                    <p class="text-slate-700 leading-relaxed font-semibold italic">Kurose, J. F., & Ross, K. W. (2017). Redes de computadoras: un enfoque descendente. Pearson.</p>
                 </div>
             </div>
             <div class="p-4 bg-white text-center border-t">
-                <button onclick="toggleModal('refsModal')" class="text-emerald-700 hover:text-emerald-900 font-black text-xs uppercase tracking-widest">Cerrar Bibliografía</button>
+                <button onclick="toggleModal('refsModal')" class="text-emerald-700 hover:text-emerald-900 font-black text-xs uppercase tracking-widest">Cerrar</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal de Créditos -->
     <div id="creditsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
-            <div class="bg-indigo-700 p-8 text-white text-center relative">
-                <button onclick="toggleModal('creditsModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-                <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-white/30">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                </div>
+            <div class="bg-indigo-700 p-8 text-white text-center">
                 <h2 class="text-2xl font-bold">Créditos</h2>
             </div>
-            <div class="p-8 space-y-6 bg-white">
-                <div>
-                    <h3 class="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-4 text-center">Equipo de Estudiantes</h3>
-                    <ul class="space-y-4">
-                        <li class="font-bold text-slate-800 text-base flex items-center justify-center gap-3 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                            </svg>
-                            Berlanga Pablo María Teresa
-                        </li>
-                        <li class="font-bold text-slate-800 text-base flex items-center justify-center gap-3 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                            </svg>
-                            García Ramos Cruz Enrique
-                        </li>
-                        <li class="font-bold text-slate-800 text-base flex items-center justify-center gap-3 text-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                            </svg>
-                            Méndez Hernández Teresa de Jesús
-                        </li>
-                    </ul>
-                </div>
-                <div class="pt-6 border-t border-slate-100 text-center">
+            <div class="p-8 space-y-4 bg-white text-center">
+                <p class="font-bold text-slate-800">Berlanga Pablo María Teresa</p>
+                <p class="font-bold text-slate-800">García Ramos Cruz Enrique</p>
+                <p class="font-bold text-slate-800">Méndez Hernández Teresa de Jesús</p>
+                <div class="pt-6 border-t border-slate-100">
                     <h3 class="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-3">Docente</h3>
-                    <div class="font-bold text-indigo-700 text-base flex items-center justify-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-700 shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M10.394 2.827a1 1 0 00-.788 0l-7 3a1 1 0 000 1.848l7 3a1 1 0 00.788 0l7-3a1 1 0 000-1.848l-7-3z" />
-                            <path d="M4.333 8.5a.5.5 0 01-.458.065l-.312-.132A.5.5 0 013.4 8V11a.5.5 0 01.5.5h1a.5.5 0 01.5-.5V8.5z" />
-                        </svg>
-                        Dr. Isaías Avendaño Cortes
-                    </div>
+                    <p class="font-bold text-indigo-700">Dr. Isaías Avendaño Cortes</p>
                 </div>
             </div>
             <div class="p-4 bg-slate-50 text-center">
@@ -324,7 +292,6 @@
     </div>
 
     <script>
-        // Inicializar selector CIDR
         const cidrSelect = document.getElementById('cidr');
         for (let i = 0; i <= 32; i++) {
             const opt = document.createElement('option');
@@ -343,15 +310,6 @@
             return (dec >>> 0).toString(2).padStart(8, '0').split('');
         }
 
-        function getIpClass(firstOctet) {
-            if (firstOctet >= 1 && firstOctet <= 126) return { name: 'A', range: '1.0.0.0 - 126.255.255.255', color: 'bg-emerald-600' };
-            if (firstOctet >= 128 && firstOctet <= 191) return { name: 'B', range: '128.0.0.0 - 191.255.255.255', color: 'bg-blue-600' };
-            if (firstOctet >= 192 && firstOctet <= 223) return { name: 'C', range: '192.0.0.0 - 223.255.255.255', color: 'bg-indigo-600' };
-            if (firstOctet >= 224 && firstOctet <= 239) return { name: 'D (Multicast)', range: '224.0.0.0 - 239.255.255.255', color: 'bg-amber-600' };
-            if (firstOctet >= 240 && firstOctet <= 255) return { name: 'E (Experimental)', range: '240.0.0.0 - 255.255.255.255', color: 'bg-rose-600' };
-            return { name: 'Reservada', range: 'N/A', color: 'bg-slate-600' };
-        }
-
         function cidrToMask(cidr) {
             let mask = [];
             let tempCidr = cidr;
@@ -361,6 +319,37 @@
                 tempCidr -= n;
             }
             return mask.join('.');
+        }
+
+        function getIpClass(firstOctet) {
+            if (firstOctet >= 1 && firstOctet <= 126) return { name: 'A', range: '1.0.0.0 - 126.255.255.255', color: 'bg-emerald-600', defaultMask: 8 };
+            if (firstOctet >= 128 && firstOctet <= 191) return { name: 'B', range: '128.0.0.0 - 191.255.255.255', color: 'bg-blue-600', defaultMask: 16 };
+            if (firstOctet >= 192 && firstOctet <= 223) return { name: 'C', range: '192.0.0.0 - 223.255.255.255', color: 'bg-indigo-600', defaultMask: 24 };
+            if (firstOctet >= 224 && firstOctet <= 239) return { name: 'D (Multicast)', range: '224.0.0.0 - 239.255.255.255', color: 'bg-amber-600', defaultMask: 0 };
+            return { name: 'E (Experimental)', range: '240.0.0.0 - 255.255.255.255', color: 'bg-rose-600', defaultMask: 0 };
+        }
+
+        function ipToLong(o1, o2, o3, o4) {
+            return (((o1 << 24) >>> 0) + (o2 << 16) + (o3 << 8) + o4) >>> 0;
+        }
+
+        function longToIp(long) {
+            return [
+                (long >>> 24) & 0xFF,
+                (long >>> 16) & 0xFF,
+                (long >>> 8) & 0xFF,
+                long & 0xFF
+            ].join('.');
+        }
+
+        function toggleBit(octetIdx, bitIdx) {
+            const inputId = `o${octetIdx + 1}`;
+            const input = document.getElementById(inputId);
+            let val = parseInt(input.value) || 0;
+            const mask = 1 << (7 - bitIdx);
+            val = val ^ mask;
+            input.value = val;
+            calculate();
         }
 
         function calculate() {
@@ -375,24 +364,64 @@
             const ipClass = getIpClass(octets[0]);
             document.getElementById('ipClassDisplay').innerText = `Clase ${ipClass.name}`;
             document.getElementById('classRangeDisplay').innerText = `Rango: ${ipClass.range}`;
-            document.getElementById('classCard').className = `${ipClass.color} text-white p-6 rounded-2xl shadow-md transition-all duration-300 transform`;
+            document.getElementById('classCard').className = `${ipClass.color} text-white p-6 rounded-2xl shadow-md transition-all duration-300`;
 
-            // Máscara y Hosts
-            document.getElementById('maskDisplay').innerText = cidrToMask(cidr);
-            const hosts = cidr >= 31 ? (cidr === 32 ? 1 : 2) : Math.pow(2, 32 - cidr) - 2;
-            document.getElementById('hostsDisplay').innerText = hosts.toLocaleString();
+            // Cálculo de Subredes
+            const subnetsDisplay = document.getElementById('subnetsDisplay');
+            const subnetsFormula = document.getElementById('subnetsFormula');
+            if (ipClass.defaultMask > 0 && cidr >= ipClass.defaultMask) {
+                const subnetBits = cidr - ipClass.defaultMask;
+                const totalSubnets = Math.pow(2, subnetBits);
+                subnetsDisplay.innerText = totalSubnets.toLocaleString();
+                subnetsFormula.innerText = `Fórmula: 2^(${cidr} - ${ipClass.defaultMask}) = 2^${subnetBits}`;
+            } else if (ipClass.defaultMask > 0 && cidr < ipClass.defaultMask) {
+                subnetsDisplay.innerText = "1";
+                subnetsFormula.innerText = "Supernetting / CIDR inferior a máscara por defecto";
+            } else {
+                subnetsDisplay.innerText = "N/A";
+                subnetsFormula.innerText = "No aplica para Clase D/E";
+            }
+
+            // Máscara
+            const maskString = cidrToMask(cidr);
+            document.getElementById('maskDisplay').innerText = maskString;
+
+            // Cálculos de Red
+            const ipLong = ipToLong(o1, o2, o3, o4);
+            const maskLong = cidr === 0 ? 0 : (~0 << (32 - cidr)) >>> 0;
+            const netLong = (ipLong & maskLong) >>> 0;
+            const broadLong = (netLong | ~maskLong) >>> 0;
+
+            document.getElementById('netAddrDisplay').innerText = longToIp(netLong);
+            document.getElementById('broadAddrDisplay').innerText = longToIp(broadLong);
+
+            // Hosts
+            const hostCount = cidr >= 31 ? (cidr === 32 ? 1 : 2) : Math.pow(2, 32 - cidr) - 2;
+            document.getElementById('hostsDisplay').innerText = hostCount.toLocaleString();
+
+            if (cidr < 31) {
+                document.getElementById('firstHostDisplay').innerText = longToIp(netLong + 1);
+                document.getElementById('lastHostDisplay').innerText = longToIp(broadLong - 1);
+            } else {
+                document.getElementById('firstHostDisplay').innerText = "N/A";
+                document.getElementById('lastHostDisplay').innerText = "N/A";
+            }
 
             // Renderizar Binarios
             const tbody = document.getElementById('binaryTableBody');
             tbody.innerHTML = '';
-            
             octets.forEach((val, idx) => {
                 const bits = decimalToBinaryArray(val);
                 const row = document.createElement('tr');
                 row.className = "hover:bg-slate-50 transition-colors border-b border-slate-100 group";
                 
-                let bitsHtml = bits.map(b => 
-                    `<span class="w-6 h-8 md:w-8 md:h-10 flex items-center justify-center rounded-lg text-sm transition-all ${b === '1' ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'text-slate-200 bg-slate-50'}">${b}</span>`
+                let bitsHtml = bits.map((b, bIdx) => 
+                    `<button onclick="toggleBit(${idx}, ${bIdx})" 
+                             title="Cambiar bit ${128 >> bIdx}"
+                             class="bit-box w-6 h-8 md:w-8 md:h-10 flex items-center justify-center rounded-lg text-sm transition-all outline-none 
+                             ${b === '1' ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'text-slate-200 bg-slate-50 hover:bg-slate-100'}">
+                        ${b}
+                    </button>`
                 ).join('');
 
                 row.innerHTML = `
@@ -408,7 +437,6 @@
             });
         }
 
-        // Ejecutar cálculo inicial
         window.onload = calculate;
     </script>
 </body>
