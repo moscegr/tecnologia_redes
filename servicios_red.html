@@ -93,7 +93,7 @@
     </main>
 
     <!-- Modales -->
-    <div id="creditsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div id="creditsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 text-inter">
         <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
             <div class="bg-indigo-700 p-8 text-white text-center relative">
                 <button onclick="toggleModal('creditsModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
@@ -143,7 +143,7 @@
                 <h2 class="text-xl font-bold uppercase tracking-tight">Referencias Bibliográficas</h2>
                 <button onclick="toggleModal('refsModal')" class="text-white hover:bg-black/10 p-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
             </div>
-            <div class="p-8 space-y-4 bg-slate-50 font-semibold text-slate-700">
+            <div class="p-8 space-y-4 bg-slate-50 font-semibold text-slate-700 text-inter">
                 <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
                     <p>Tanenbaum, A. S., & Wetherall, D. (2011). <span class="italic font-normal text-slate-500">Redes de Computadoras</span>. Pearson Educación.</p>
                 </div>
@@ -272,16 +272,6 @@
                             </h4>
                             <p class="text-indigo-900/80 text-sm leading-relaxed font-medium italic">"${s.example}"</p>
                         </div>
-
-                        <div>
-                            <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-3">
-                                <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center text-indigo-600 text-xs">C</div>
-                                Pasos Técnicos
-                            </h4>
-                            <div class="space-y-2 pl-2">
-                                ${s.steps.map(step => `<div class="flex items-center gap-4 text-sm text-slate-600"><div class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></div>${step}</div>`).join('')}
-                            </div>
-                        </div>
                     </div>
 
                     <div class="space-y-8">
@@ -289,6 +279,17 @@
                             <div class="text-slate-400 font-bold text-[10px] uppercase tracking-widest mb-2 text-center">Referencia Visual del Flujo</div>
                             ${s.svg}
                         </div>
+
+                        <div>
+                            <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-3">
+                                <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 text-xs font-bold">C</div>
+                                Pasos Técnicos
+                            </h4>
+                            <div class="space-y-2 pl-2">
+                                ${s.steps.map(step => `<div class="flex items-center gap-4 text-sm text-slate-600"><div class="w-1.5 h-1.5 bg-indigo-500 rounded-full"></div>${step}</div>`).join('')}
+                            </div>
+                        </div>
+
                         <div class="bg-${s.color}-50 border p-6 rounded-3xl shadow-sm">
                             <h4 class="font-bold text-${s.color}-800 text-sm mb-2 italic">Dato curioso</h4>
                             <p class="text-xs text-${s.color}-700 font-medium">${s.funFact}</p>
