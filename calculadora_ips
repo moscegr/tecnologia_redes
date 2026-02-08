@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Redes IPv4 - Análisis Académico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Fira Code', monospace; }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .modal-scroll { max-height: 70vh; overflow-y: auto; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen pb-12">
+
+    <!-- Navbar / Header -->
+    <nav class="bg-indigo-700 text-white shadow-lg mb-8 sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-4 flex flex-col lg:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+                <div class="p-2 bg-white/10 rounded-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                    </svg>
+                </div>
+                <div class="flex flex-col border-l-0 md:border-l md:pl-4 border-white/20">
+                    <h1 class="text-xl font-bold tracking-tight uppercase">Análisis de Redes IPv4</h1>
+                    <div class="text-[10px] uppercase tracking-widest font-bold text-indigo-200 leading-tight mt-1">
+                        <p>UNIVERSIDAD TENAM</p>
+                        <p>MAESTRÍA EN INGENIERÍA INTELIGENTE</p>
+                        <p>MATERIA TECNOLOGÍA DE REDES</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3">
+                <button onclick="toggleModal('refsModal')" class="bg-emerald-500 hover:bg-emerald-600 transition-all px-5 py-2 rounded-full font-semibold text-sm flex items-center gap-2 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    Referencias Bibliográficas
+                </button>
+                <button onclick="toggleModal('creditsModal')" class="bg-white/10 hover:bg-white/20 transition-all border border-white/30 px-5 py-2 rounded-full font-semibold text-sm flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                    Créditos
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 max-w-5xl">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            
+            <!-- Entrada de Datos -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span class="w-2 h-6 bg-indigo-500 rounded-full"></span>
+                        Configuración
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Dirección IPv4</label>
+                            <div class="flex gap-1 items-center">
+                                <input type="number" id="o1" value="192" min="0" max="255" oninput="calculate()" class="w-full p-2 text-center bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-sm">
+                                <span class="text-slate-300">.</span>
+                                <input type="number" id="o2" value="168" min="0" max="255" oninput="calculate()" class="w-full p-2 text-center bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-sm">
+                                <span class="text-slate-300">.</span>
+                                <input type="number" id="o3" value="1" min="0" max="255" oninput="calculate()" class="w-full p-2 text-center bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-sm">
+                                <span class="text-slate-300">.</span>
+                                <input type="number" id="o4" value="10" min="0" max="255" oninput="calculate()" class="w-full p-2 text-center bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Máscara (CIDR)</label>
+                            <select id="cidr" onchange="calculate()" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-indigo-700">
+                                <!-- Generado por JS -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info de Clase -->
+                <div id="classCard" class="bg-indigo-600 text-white p-6 rounded-2xl shadow-md transition-all">
+                    <h3 class="text-indigo-200 text-xs uppercase tracking-widest font-bold mb-1">Clasificación de Red</h3>
+                    <div class="text-4xl font-black mb-2" id="ipClassDisplay">Clase C</div>
+                    <p class="text-sm opacity-90" id="classRangeDisplay">Rango: 192.0.0.0 a 223.255.255.255</p>
+                </div>
+            </div>
+
+            <!-- Resultados y Binarios -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- Tabla de Octetos Binarios -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                        <h2 class="text-sm font-bold text-slate-700 uppercase tracking-tight">Conversión a Binario</h2>
+                        <span class="text-[10px] font-mono bg-indigo-100 px-2 py-1 rounded text-indigo-600 font-bold text-center">Base 2</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-400 text-[10px] uppercase font-bold">
+                                    <th class="p-4 border-b">Posición</th>
+                                    <th class="p-4 border-b text-center">Decimal</th>
+                                    <th class="p-4 border-b">
+                                        <div class="flex justify-between w-full font-mono max-w-[280px] mx-auto text-indigo-500">
+                                            <span>128</span><span>64</span><span>32</span><span>16</span><span>8</span><span>4</span><span>2</span><span>1</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="binaryTableBody" class="font-mono">
+                                <!-- Generado por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Resumen de Red -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-1">Máscara de Subred</p>
+                        <p class="text-xl font-bold text-slate-800 font-mono" id="maskDisplay">255.255.255.0</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-1">Hosts Útiles</p>
+                        <p class="text-xl font-bold text-indigo-600 font-mono" id="hostsDisplay">254</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Nueva Sección: Explicación de Clases -->
+        <section class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-8">
+            <div class="text-center max-w-2xl mx-auto">
+                <h2 class="text-3xl font-black text-slate-800 mb-2">Tipos de Clases de IP</h2>
+                <p class="text-slate-500">El sistema de direccionamiento IPv4 se divide en cinco clases (A a E) para facilitar la organización de redes según su tamaño y propósito.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Clase A -->
+                <div class="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="bg-emerald-600 text-white w-8 h-8 flex items-center justify-center rounded-lg font-bold">A</span>
+                        <h3 class="font-bold text-emerald-900">Redes Gigantes</h3>
+                    </div>
+                    <p class="text-sm text-emerald-800 mb-4">Diseñada para organizaciones extremadamente grandes (gobiernos, proveedores globales).</p>
+                    <ul class="text-xs space-y-2 text-emerald-700 font-semibold">
+                        <li>• Rango: 1.0.0.0 a 126.255.255.255</li>
+                        <li>• Máscara por defecto: 255.0.0.0 (/8)</li>
+                        <li>• Hosts por red: 16.7 millones</li>
+                    </ul>
+                </div>
+
+                <!-- Clase B -->
+                <div class="p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="bg-blue-600 text-white w-8 h-8 flex items-center justify-center rounded-lg font-bold">B</span>
+                        <h3 class="font-bold text-blue-900">Redes Medianas</h3>
+                    </div>
+                    <p class="text-sm text-blue-800 mb-4">Utilizada habitualmente por grandes universidades y corporaciones multinacionales.</p>
+                    <ul class="text-xs space-y-2 text-blue-700 font-semibold">
+                        <li>• Rango: 128.0.0.0 a 191.255.255.255</li>
+                        <li>• Máscara por defecto: 255.255.0.0 (/16)</li>
+                        <li>• Hosts por red: 65,534</li>
+                    </ul>
+                </div>
+
+                <!-- Clase C -->
+                <div class="p-6 bg-indigo-50 rounded-2xl border border-indigo-100">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="bg-indigo-600 text-white w-8 h-8 flex items-center justify-center rounded-lg font-bold">C</span>
+                        <h3 class="font-bold text-indigo-900">Redes Pequeñas</h3>
+                    </div>
+                    <p class="text-sm text-indigo-800 mb-4">La clase más común en hogares, PyMEs y redes locales (LAN) estándar.</p>
+                    <ul class="text-xs space-y-2 text-indigo-700 font-semibold">
+                        <li>• Rango: 192.0.0.0 a 223.255.255.255</li>
+                        <li>• Máscara por defecto: 255.255.255.0 (/24)</li>
+                        <li>• Hosts por red: 254</li>
+                    </ul>
+                </div>
+
+                <!-- Clase D y E -->
+                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="bg-amber-500 text-white w-8 h-8 flex items-center justify-center rounded-lg font-bold">D</span>
+                            <h3 class="font-bold text-slate-800">Multicast</h3>
+                        </div>
+                        <p class="text-xs text-slate-600 italic">Rango: 224.0.0.0 a 239.255.255.255. No se asigna a dispositivos individuales; se usa para transmitir datos a múltiples receptores a la vez (streaming, protocolos de enrutamiento).</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="bg-rose-500 text-white w-8 h-8 flex items-center justify-center rounded-lg font-bold">E</span>
+                            <h3 class="font-bold text-slate-800">Experimental</h3>
+                        </div>
+                        <p class="text-xs text-slate-600 italic">Rango: 240.0.0.0 a 255.255.255.255. Reservada por la IANA para fines de investigación y desarrollo futuro. No tiene uso comercial en Internet.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Referencias Bibliográficas -->
+    <div id="refsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div class="bg-emerald-700 p-6 text-white flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-white/20 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold uppercase tracking-tight">Referencias Bibliográficas</h2>
+                        <p class="text-emerald-100 text-[10px] uppercase font-bold tracking-widest opacity-80">Fuentes de Estudio en Redes</p>
+                    </div>
+                </div>
+                <button onclick="toggleModal('refsModal')" class="text-white hover:bg-black/10 p-2 rounded-full transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="p-8 modal-scroll space-y-6 bg-slate-50">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-200 transition-colors">
+                    <p class="text-xs font-bold text-emerald-600 mb-1">Libro de Texto Principal</p>
+                    <p class="text-slate-700 leading-relaxed font-semibold">Tanenbaum, A. S., & Wetherall, D. (2011). <span class="italic">Redes de Computadoras</span>. Pearson Educación.</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-200 transition-colors">
+                    <p class="text-xs font-bold text-emerald-600 mb-1">Enfoque de Protocolos</p>
+                    <p class="text-slate-700 leading-relaxed font-semibold">Kurose, J. F., & Ross, K. W. (2017). <span class="italic">Redes de computadoras: un enfoque descendente</span>. Pearson.</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-200 transition-colors">
+                    <p class="text-xs font-bold text-emerald-600 mb-1">Referencia Técnica</p>
+                    <p class="text-slate-700 leading-relaxed font-semibold">Stallings, W. (2014). <span class="italic">Comunicaciones y redes de computadores</span>. Pearson Educación.</p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-emerald-200 transition-colors">
+                    <p class="text-xs font-bold text-emerald-600 mb-1">Certificación Industrial</p>
+                    <p class="text-slate-700 leading-relaxed font-semibold">Cisco Networking Academy. (2022). <span class="italic">CCNA: Introducción a las redes (ITN) v7.0</span>.</p>
+                </div>
+            </div>
+            <div class="p-4 bg-white text-center border-t">
+                <button onclick="toggleModal('refsModal')" class="text-emerald-700 hover:text-emerald-900 font-black text-xs uppercase tracking-widest">Cerrar Bibliografía</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Créditos -->
+    <div id="creditsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+            <div class="bg-indigo-700 p-8 text-white text-center relative">
+                <button onclick="toggleModal('creditsModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-white/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold">Créditos</h2>
+            </div>
+            <div class="p-8 space-y-6 bg-white">
+                <div>
+                    <h3 class="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-4 text-center">Equipo de Estudiantes</h3>
+                    <ul class="space-y-4">
+                        <li class="font-bold text-slate-800 text-base flex items-center justify-center gap-3 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                            </svg>
+                            Berlanga Pablo María Teresa
+                        </li>
+                        <li class="font-bold text-slate-800 text-base flex items-center justify-center gap-3 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                            </svg>
+                            García Ramos Cruz Enrique
+                        </li>
+                        <li class="font-bold text-slate-800 text-base flex items-center justify-center gap-3 text-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                            </svg>
+                            Méndez Hernández Teresa de Jesús
+                        </li>
+                    </ul>
+                </div>
+                <div class="pt-6 border-t border-slate-100 text-center">
+                    <h3 class="text-[10px] uppercase tracking-widest font-black text-slate-400 mb-3">Docente</h3>
+                    <div class="font-bold text-indigo-700 text-base flex items-center justify-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-700 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.394 2.827a1 1 0 00-.788 0l-7 3a1 1 0 000 1.848l7 3a1 1 0 00.788 0l7-3a1 1 0 000-1.848l-7-3z" />
+                            <path d="M4.333 8.5a.5.5 0 01-.458.065l-.312-.132A.5.5 0 013.4 8V11a.5.5 0 01.5.5h1a.5.5 0 01.5-.5V8.5z" />
+                        </svg>
+                        Dr. Isaías Avendaño Cortes
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-slate-50 text-center">
+                <button onclick="toggleModal('creditsModal')" class="text-slate-400 hover:text-indigo-600 font-bold text-xs uppercase tracking-widest">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar selector CIDR
+        const cidrSelect = document.getElementById('cidr');
+        for (let i = 0; i <= 32; i++) {
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.innerText = `/${i} (${cidrToMask(i)})`;
+            if (i === 24) opt.selected = true;
+            cidrSelect.appendChild(opt);
+        }
+
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.toggle('hidden');
+        }
+
+        function decimalToBinaryArray(dec) {
+            return (dec >>> 0).toString(2).padStart(8, '0').split('');
+        }
+
+        function getIpClass(firstOctet) {
+            if (firstOctet >= 1 && firstOctet <= 126) return { name: 'A', range: '1.0.0.0 - 126.255.255.255', color: 'bg-emerald-600' };
+            if (firstOctet >= 128 && firstOctet <= 191) return { name: 'B', range: '128.0.0.0 - 191.255.255.255', color: 'bg-blue-600' };
+            if (firstOctet >= 192 && firstOctet <= 223) return { name: 'C', range: '192.0.0.0 - 223.255.255.255', color: 'bg-indigo-600' };
+            if (firstOctet >= 224 && firstOctet <= 239) return { name: 'D (Multicast)', range: '224.0.0.0 - 239.255.255.255', color: 'bg-amber-600' };
+            if (firstOctet >= 240 && firstOctet <= 255) return { name: 'E (Experimental)', range: '240.0.0.0 - 255.255.255.255', color: 'bg-rose-600' };
+            return { name: 'Reservada', range: 'N/A', color: 'bg-slate-600' };
+        }
+
+        function cidrToMask(cidr) {
+            let mask = [];
+            let tempCidr = cidr;
+            for (let i = 0; i < 4; i++) {
+                let n = Math.min(tempCidr, 8);
+                mask.push(256 - Math.pow(2, 8 - n));
+                tempCidr -= n;
+            }
+            return mask.join('.');
+        }
+
+        function calculate() {
+            const o1 = parseInt(document.getElementById('o1').value) || 0;
+            const o2 = parseInt(document.getElementById('o2').value) || 0;
+            const o3 = parseInt(document.getElementById('o3').value) || 0;
+            const o4 = parseInt(document.getElementById('o4').value) || 0;
+            const octets = [o1, o2, o3, o4];
+            const cidr = parseInt(document.getElementById('cidr').value);
+
+            // Clase de IP
+            const ipClass = getIpClass(octets[0]);
+            document.getElementById('ipClassDisplay').innerText = `Clase ${ipClass.name}`;
+            document.getElementById('classRangeDisplay').innerText = `Rango: ${ipClass.range}`;
+            document.getElementById('classCard').className = `${ipClass.color} text-white p-6 rounded-2xl shadow-md transition-all duration-300 transform`;
+
+            // Máscara y Hosts
+            document.getElementById('maskDisplay').innerText = cidrToMask(cidr);
+            const hosts = cidr >= 31 ? (cidr === 32 ? 1 : 2) : Math.pow(2, 32 - cidr) - 2;
+            document.getElementById('hostsDisplay').innerText = hosts.toLocaleString();
+
+            // Renderizar Binarios
+            const tbody = document.getElementById('binaryTableBody');
+            tbody.innerHTML = '';
+            
+            octets.forEach((val, idx) => {
+                const bits = decimalToBinaryArray(val);
+                const row = document.createElement('tr');
+                row.className = "hover:bg-slate-50 transition-colors border-b border-slate-100 group";
+                
+                let bitsHtml = bits.map(b => 
+                    `<span class="w-6 h-8 md:w-8 md:h-10 flex items-center justify-center rounded-lg text-sm transition-all ${b === '1' ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'text-slate-200 bg-slate-50'}">${b}</span>`
+                ).join('');
+
+                row.innerHTML = `
+                    <td class="p-4 font-bold text-slate-400 text-xs uppercase">OCTETO ${idx + 1}</td>
+                    <td class="p-4 text-center font-black text-indigo-700 text-lg">${val}</td>
+                    <td class="p-4">
+                        <div class="flex justify-between w-full max-w-[280px] mx-auto">
+                            ${bitsHtml}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Ejecutar cálculo inicial
+        window.onload = calculate;
+    </script>
+</body>
+</html>
