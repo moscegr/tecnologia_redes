@@ -49,7 +49,26 @@
         </section>
 
         <!-- Menú de navegación principal -->
-        <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            
+            <!-- Línea del Tiempo Card -->
+            <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
+                <div class="bg-gray-200 h-48 w-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1501139083538-0139583c060f?auto=format&fit=crop&q=80&w=800" 
+                         alt="[Imagen de Tiempo]" 
+                         onerror="this.src='https://placehold.co/800x400/003366/FFFFFF?text=Línea+del+Tiempo'"
+                         class="w-full h-full object-cover">
+                </div>
+                <div class="p-6 text-center flex-grow flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xl font-bold mb-3 text-blue-800">Línea del Tiempo</h4>
+                        <p class="text-gray-600 mb-6 text-sm">Evolución histórica de las redes de computadoras desde sus orígenes hasta la actualidad.</p>
+                    </div>
+                    <a href="linea_tiempo.html" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors block text-center">
+                        Acceder
+                    </a>
+                </div>
+            </div>
             
             <!-- Modelo OSI Card -->
             <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
