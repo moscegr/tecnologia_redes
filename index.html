@@ -12,12 +12,11 @@
             background-color: #f0f4f8;
             scroll-behavior: smooth;
         }
-        /* Estilos para el efecto de elevación en las tarjetas */
         .card-hover:hover {
             transform: translateY(-5px);
             transition: all 0.3s ease;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
         }
-        /* Animación de entrada */
         .fade-in {
             animation: fadeIn 0.6s ease-out;
         }
@@ -38,118 +37,111 @@
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-8 fade-in">
+    <main class="max-w-7xl mx-auto px-4 py-8 fade-in">
         
         <!-- Introducción a la materia -->
         <section class="mb-12 bg-white p-8 rounded-2xl shadow-sm border-l-8 border-blue-600">
             <h3 class="text-3xl font-bold mb-4 text-blue-900">Introducción: Tecnología de Redes</h3>
             <p class="text-lg text-gray-700 leading-relaxed">
-                La asignatura de Tecnología de Redes constituye el pilar fundamental para comprender cómo fluye la información en el mundo digital actual. Exploramos la interconexión de sistemas y la optimización de protocolos de comunicación.
+                La asignatura de Tecnología de Redes constituye el pilar fundamental para comprender cómo fluye la información en el mundo digital actual. A través de esta plataforma, presentamos los resultados del trabajo colaborativo e individual, explorando desde la arquitectura de protocolos hasta la optimización de sistemas distribuidos inteligentes.
             </p>
         </section>
 
-        <!-- Menú de navegación principal -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            
-            <!-- Línea del Tiempo Card -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
-                <div class="bg-gray-200 h-48 w-full overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1501139083538-0139583c060f?auto=format&fit=crop&q=80&w=800" 
-                         alt="[Imagen de Tiempo]" 
-                         onerror="this.src='https://placehold.co/800x400/003366/FFFFFF?text=Línea+del+Tiempo'"
-                         class="w-full h-full object-cover">
-                </div>
-                <div class="p-6 text-center flex-grow flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-xl font-bold mb-3 text-blue-800">Línea del Tiempo</h4>
-                        <p class="text-gray-600 mb-6 text-sm">Evolución histórica de las redes de computadoras desde sus orígenes hasta la actualidad.</p>
-                    </div>
-                    <a href="linea_tiempo.html" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors block text-center">
-                        Acceder
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Modelo OSI Card -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
-                <div class="bg-gray-200 h-48 w-full overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800" 
-                         alt="[Imagen de Red Global]" 
-                         onerror="this.src='https://placehold.co/800x400/003366/FFFFFF?text=Modelo+OSI'"
-                         class="w-full h-full object-cover">
-                </div>
-                <div class="p-6 text-center flex-grow flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-xl font-bold mb-3 text-blue-800">Modelo OSI</h4>
-                        <p class="text-gray-600 mb-6 text-sm">Estudio integral de la comunicación de red a través de sus siete capas fundamentales.</p>
-                    </div>
-                    <a href="modelo_osi.html" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors block text-center">
-                        Acceder
-                    </a>
-                </div>
-            </div>
+        <!-- SECCIÓN: TRABAJOS EN EQUIPO -->
+        <div class="mb-10 border-b border-gray-200 pb-4">
+            <h3 class="text-2xl font-bold text-blue-900">Trabajos en Equipo</h3>
+            <p class="text-gray-500 text-sm italic">Desarrollos colaborativos y herramientas técnicas compartidas.</p>
+        </div>
 
-            <!-- Calculadora IP Card -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <!-- Línea del Tiempo -->
             <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
-                <div class="bg-gray-200 h-48 w-full overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800" 
-                         alt="[Imagen de Infraestructura de Red]" 
-                         onerror="this.src='https://placehold.co/800x400/004080/FFFFFF?text=Calculadora+IP'"
-                         class="w-full h-full object-cover">
-                </div>
-                <div class="p-6 text-center flex-grow flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-xl font-bold mb-3 text-blue-800">Calculadora IP</h4>
-                        <p class="text-gray-600 mb-6 text-sm">Herramienta para el cálculo de subredes, máscaras y segmentación IPv4 de forma precisa.</p>
-                    </div>
-                    <a href="calculadora_ip.html" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors block text-center">
-                        Acceder
-                    </a>
+                <img src="https://images.unsplash.com/photo-1501139083538-0139583c060f?auto=format&fit=crop&q=80&w=400" alt="[Imagen de Cronología]" class="h-32 w-full object-cover">
+                <div class="p-6 flex-grow flex flex-col">
+                    <h4 class="font-bold text-blue-800 mb-2">Línea del Tiempo</h4>
+                    <p class="text-gray-600 text-xs mb-4 flex-grow">Un análisis histórico que recorre la evolución de las telecomunicaciones, destacando los hitos tecnológicos que permitieron el nacimiento de la Internet moderna.</p>
+                    <a href="linea_tiempo.html" class="text-center text-xs bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition-colors">Acceder al Recurso</a>
                 </div>
             </div>
-
-            <!-- Servicios de Red Card -->
+            <!-- Modelo OSI -->
             <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
-                <div class="bg-gray-200 h-48 w-full overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=800" 
-                         alt="[Imagen de Servicios de Red]" 
-                         onerror="this.src='https://placehold.co/800x400/002244/FFFFFF?text=Servicios+de+Red'"
-                         class="w-full h-full object-cover">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=400" alt="[Imagen de Capas OSI]" class="h-32 w-full object-cover">
+                <div class="p-6 flex-grow flex flex-col">
+                    <h4 class="font-bold text-blue-800 mb-2">Modelo OSI</h4>
+                    <p class="text-gray-600 text-xs mb-4 flex-grow">Estudio profundo de la arquitectura estándar de 7 capas, detallando cómo interactúan los protocolos para garantizar la interoperabilidad global.</p>
+                    <a href="modelo_osi.html" class="text-center text-xs bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition-colors">Acceder al Recurso</a>
                 </div>
-                <div class="p-6 text-center flex-grow flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-xl font-bold mb-3 text-blue-800">Servicios de Red</h4>
-                        <p class="text-gray-600 mb-6 text-sm">Exploración de protocolos y servicios esenciales como DNS, DHCP, HTTP y seguridad SSH.</p>
-                    </div>
-                    <a href="servicios_red.html" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-colors block text-center">
-                        Acceder
-                    </a>
+            </div>
+            <!-- Calculadora IP -->
+            <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
+                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=400" alt="[Imagen de Cálculo de Redes]" class="h-32 w-full object-cover">
+                <div class="p-6 flex-grow flex flex-col">
+                    <h4 class="font-bold text-blue-800 mb-2">Calculadora IP</h4>
+                    <p class="text-gray-600 text-xs mb-4 flex-grow">Herramienta técnica desarrollada para automatizar el cálculo de máscaras, subredes y rangos de host útiles en redes IPv4.</p>
+                    <a href="calculadora_ip.html" class="text-center text-xs bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition-colors">Acceder al Recurso</a>
+                </div>
+            </div>
+            <!-- Servicios de Red -->
+            <div class="bg-white rounded-3xl overflow-hidden shadow-md card-hover border border-gray-100 flex flex-col">
+                <img src="https://images.unsplash.com/photo-1597733336794-12d05021d510?auto=format&fit=crop&q=80&w=400" alt="[Imagen de Protocolos de Red]" class="h-32 w-full object-cover">
+                <div class="p-6 flex-grow flex flex-col">
+                    <h4 class="font-bold text-blue-800 mb-2">Servicios de Red</h4>
+                    <p class="text-gray-600 text-xs mb-4 flex-grow">Infografía técnica interactiva sobre protocolos fundamentales como DNS, DHCP y HTTP que sustentan los servicios de la capa de aplicación.</p>
+                    <a href="servicios_red.html" class="text-center text-xs bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition-colors">Acceder al Recurso</a>
                 </div>
             </div>
         </div>
 
-        <!-- Sección de Créditos -->
+        <!-- SECCIÓN: PORTAFOLIOS INDIVIDUALES -->
+        <div class="mb-10 border-b border-gray-200 pb-4">
+            <h3 class="text-2xl font-bold text-indigo-900">Portafolios Individuales (Trabajos)</h3>
+            <p class="text-gray-500 text-sm italic">Espacio exclusivo para las actividades de cada integrante del equipo.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <!-- Portafolio Teresa Berlanga -->
+            <div class="bg-indigo-50 border-2 border-indigo-100 rounded-[2.5rem] p-8 card-hover flex flex-col items-center text-center">
+                <div class="w-20 h-20 bg-indigo-600 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4 shadow-lg">T</div>
+                <h4 class="text-xl font-bold text-indigo-900 mb-2">Berlanga Pablo <br> María Teresa</h4>
+                <p class="text-indigo-600/70 text-sm mb-6 flex-grow text-balance">Actividades, evidencias de aprendizaje y proyectos individuales.</p>
+                <a href="portafolio_teresa_b.html" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-2xl hover:bg-indigo-700 transition-all shadow-md">Ver Mis Trabajos</a>
+            </div>
+
+            <!-- Portafolio Cruz García -->
+            <div class="bg-blue-50 border-2 border-blue-100 rounded-[2.5rem] p-8 card-hover flex flex-col items-center text-center">
+                <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4 shadow-lg">C</div>
+                <h4 class="text-xl font-bold text-blue-900 mb-2">García Ramos <br> Cruz Enrique</h4>
+                <p class="text-blue-600/70 text-sm mb-6 flex-grow text-balance">Repositorio personal para la gestión de prácticas y actividades.</p>
+                <a href="portafolio_cruz_g.html" class="w-full bg-blue-600 text-white font-bold py-3 rounded-2xl hover:bg-blue-700 transition-all shadow-md">Ver Mis Trabajos</a>
+            </div>
+
+            <!-- Portafolio Teresa Méndez -->
+            <div class="bg-indigo-50 border-2 border-indigo-100 rounded-[2.5rem] p-8 card-hover flex flex-col items-center text-center">
+                <div class="w-20 h-20 bg-indigo-800 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4 shadow-lg">T</div>
+                <h4 class="text-xl font-bold text-indigo-900 mb-2">Méndez Hernández <br> Teresa de Jesús</h4>
+                <p class="text-indigo-600/70 text-sm mb-6 flex-grow text-balance">Seguimiento de trabajos prácticos y documentación técnica individual.</p>
+                <a href="portafolio_teresa_m.html" class="w-full bg-indigo-800 text-white font-bold py-3 rounded-2xl hover:bg-indigo-900 transition-all shadow-md">Ver Mis Trabajos</a>
+            </div>
+        </div>
+
+        <!-- Créditos -->
         <section class="bg-gray-800 text-gray-300 p-10 rounded-3xl">
             <div class="grid md:grid-cols-2 gap-10">
                 <div>
-                    <h5 class="text-blue-400 font-bold uppercase tracking-wider mb-4">Estudiantes</h5>
-                    <ul class="space-y-2 text-lg">
-                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span> Berlanga Pablo María Teresa</li>
-                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span> García Ramos Cruz Enrique</li>
-                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span> Méndez Hernández Teresa de Jesús</li>
-                    </ul>
-                </div>
-                <div>
                     <h5 class="text-blue-400 font-bold uppercase tracking-wider mb-4">Docente</h5>
                     <p class="text-2xl font-semibold text-white">Dr. Isaías Avendaño Cortes</p>
+                </div>
+                <div class="text-right flex flex-col items-end justify-center">
+                    <p class="text-gray-500 font-bold uppercase tracking-tighter">Universidad TENAM • 2026</p>
+                    <p class="text-xs text-gray-600">Maestría en Ingeniería Inteligente</p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="text-center py-8 text-gray-500 text-sm">
-        <p>© 2026 UNIVERSIDAD TENAM - Ingeniería Inteligente</p>
+    <footer class="text-center py-8 text-gray-400 text-sm">
+        <p>© 2026 Tecnología de Redes - Universidad TENAM</p>
     </footer>
 
 </body>
